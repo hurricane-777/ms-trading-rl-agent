@@ -1,0 +1,10 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+streamlit>=1.30.0
+gymnasium
+yfinance
+scikit-learn
+pandas
+numpy
+tqdm
+matplotlib
+torch

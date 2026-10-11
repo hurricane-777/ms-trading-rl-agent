@@ -1,0 +1,78 @@
+{
+  "config": {
+    "ticker": "AAPL",
+    "train_years": "2010-2019",
+    "val_years": "2020-2022",
+    "test_years": "2023-2024 (unused in this trial)",
+    "steps": 50000,
+    "seed": 42,
+    "gamma": 0.99,
+    "lr": 0.0001,
+    "batch_size": 64,
+    "replay_size": 100000,
+    "warmup": 5000,
+    "tau": 0.005,
+    "eps_start": 1.0,
+    "eps_end": 0.05,
+    "eps_decay_steps": 25000,
+    "hidden": 128,
+    "eval_every_episodes": 50,
+    "random_baseline_seeds": 100
+  },
+  "notes": {
+    "split": "validation 2020-2022 only",
+    "test_split": "loaded but not evaluated",
+    "fill": "decision at close t, fill at open t+1",
+    "device": "cpu"
+  },
+  "results": {
+    "DQN": {
+      "total_return": 0.4220166883512324,
+      "sharpe": 0.5311407959054838,
+      "max_drawdown": -0.2973700470286543,
+      "n_trades": 247,
+      "transaction_costs": 218.5894426677764,
+      "final_value": 14220.166883512324,
+      "best_val_sharpe_during_train": 0.5311407959054838
+    },
+    "Double + Dueling DQN": {
+      "total_return": 0.3521849276848168,
+      "sharpe": 0.6885182831872616,
+      "max_drawdown": -0.19571643906990965,
+      "n_trades": 310,
+      "transaction_costs": 284.71227553174043,
+      "final_value": 13521.849276848168,
+      "best_val_sharpe_during_train": 0.6885182831872616
+    },
+    "Buy-and-hold": {
+      "total_return": 0.7751206666029942,
+      "sharpe": 0.7053528667401175,
+      "max_drawdown": -0.31280860702837476,
+      "n_trades": 1,
+      "transaction_costs": 9.93871536689418,
+      "final_value": 17751.206666029942
+    },
+    "Random": {
+      "total_return": 0.3609403687792067,
+      "sharpe": 0.5838537847134244,
+      "max_drawdown": -0.21798430923669762,
+      "n_trades": 472.73,
+      "transaction_costs": 435.2668349931991,
+      "final_value": 13609.403687792066,
+      "n_seeds": 100
+    },
+    "All-cash": {
+      "total_return": 0.0,
+      "sharpe": 0.0,
+      "max_drawdown": 0.0,
+      "n_trades": 0,
+      "transaction_costs": 0.0,
+      "final_value": 10000.0
+    }
+  },
+  "data_rows": {
+    "train": 2457,
+    "validation": 756,
+    "test_unused": 502
+  }
+}
