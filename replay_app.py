@@ -4,19 +4,15 @@ Loads a saved Part C checkpoint and replays it on the chosen evaluation window.
 No live market connection and no real trades.
 """
 
-from pathlib import Path
-
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import streamlit as st
 import torch
 from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
 
 from run_partc_trial import (
-    CFG,
     DEVICE,
-    EPISODE_LEN,
     INITIAL_CAPITAL,
     QNet,
     ROOT,
@@ -29,6 +25,17 @@ from run_partc_trial import (
 )
 
 st.set_page_config(page_title="RL Trading Agent", layout="wide")
+st.markdown(
+    """
+    <style>
+    .block-container {padding-top: 1rem; padding-bottom: 0.6rem;}
+    h1 {font-size: 1.55rem; margin-bottom: 0.15rem;}
+    [data-testid="stHeader"] {background: transparent;}
+    div[data-testid="stMetric"] {background: #f4f4f4; padding: 0.35rem 0.55rem; border-radius: 4px;}
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 MODELS = {
     "Double + Dueling DQN": (ROOT / "Double_Dueling_DQN.pt", True),
@@ -39,6 +46,17 @@ PERIODS = {
     "2020-2022 validation": ("2020-01-01", "2022-12-31"),
     "2023-2024 test": ("2023-01-01", "2024-12-31"),
 }
+
+# Chart shows a sample of trades so markers stay readable.
+# The true count is still reported in Key results.
+MAX_MARKERS = 20
+
+
+def thin_markers(idx, max_n=MAX_MARKERS):
+    if len(idx) <= max_n:
+        return idx
+    pick = np.linspace(0, len(idx) - 1, max_n).round().astype(int)
+    return np.unique(idx[pick])
 
 
 @st.cache_data(show_spinner="Loading market data...")
@@ -124,8 +142,7 @@ def replay(model_name, period_name):
 
 st.title("RL Trading Agent")
 st.caption(
-    "Offline replay dashboard · Local Streamlit demo · "
-    "Loads a saved model and replays decisions · "
+    "Offline replay dashboard. Loads a saved model and replays decisions. "
     "Does not connect to live markets or place real trades."
 )
 
@@ -138,51 +155,58 @@ with c2:
 out = replay(model_name, period_name)
 dates = out["dates"]
 actions = out["actions"]
-buy_idx = np.where(actions == 1)[0]
-sell_idx = np.where(actions == 2)[0]
+buy_idx = thin_markers(np.where(actions == 1)[0])
+sell_idx = thin_markers(np.where(actions == 2)[0])
+n_buy = int((actions == 1).sum())
+n_sell = int((actions == 2).sum())
 
-left, right = st.columns([1.7, 1.0])
+left, right = st.columns([2.15, 0.95])
 
 with left:
-    st.subheader("Stock price over time")
-    st.caption("Buy and sell markers")
-    fig1, ax1 = plt.subplots(figsize=(8.2, 3.2))
-    ax1.plot(dates, out["prices"], color="black", linewidth=1.2)
-    if len(buy_idx):
-        ax1.scatter(dates[buy_idx], out["prices"][buy_idx], marker="^", s=28, color="black", label="Buy")
-    if len(sell_idx):
-        ax1.scatter(dates[sell_idx], out["prices"][sell_idx], marker="v", s=28, color="dimgray", label="Sell")
-    ax1.legend(frameon=False, loc="upper left")
-    ax1.set_ylabel("Close")
-    fig1.autofmt_xdate()
-    fig1.tight_layout()
-    st.pyplot(fig1, width="stretch")
-    plt.close(fig1)
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9.2, 5.0), sharex=True)
 
-    st.subheader("Portfolio value over time")
-    st.caption("Agent vs buy-and-hold")
-    fig2, ax2 = plt.subplots(figsize=(8.2, 3.2))
-    ax2.plot(dates, out["values"], color="black", linewidth=1.4, label="Agent")
-    ax2.plot(dates, out["bh"], color="gray", linewidth=1.3, linestyle="--", label="Buy-and-hold")
-    ax2.legend(frameon=False, loc="upper left")
+    ax1.set_title("Stock price over time", loc="left", fontsize=11, pad=4)
+    ax1.plot(dates, out["prices"], color="black", linewidth=1.15)
+    if len(buy_idx):
+        ax1.scatter(dates[buy_idx], out["prices"][buy_idx], marker="^", s=22, color="black", label="Buy", zorder=3)
+    if len(sell_idx):
+        ax1.scatter(dates[sell_idx], out["prices"][sell_idx], marker="v", s=22, color="dimgray", label="Sell", zorder=3)
+    ax1.legend(frameon=False, loc="upper left", fontsize=8)
+    ax1.set_ylabel("Close")
+    ax1.tick_params(labelsize=8)
+
+    ax2.set_title("Portfolio value over time", loc="left", fontsize=11, pad=4)
+    ax2.plot(dates, out["values"], color="black", linewidth=1.3, label="Agent")
+    ax2.plot(dates, out["bh"], color="gray", linewidth=1.2, linestyle="--", label="Buy-and-hold")
+    ax2.legend(frameon=False, loc="upper left", fontsize=8)
     ax2.set_ylabel("Portfolio ($)")
-    fig2.autofmt_xdate()
-    fig2.tight_layout()
-    st.pyplot(fig2, width="stretch")
-    plt.close(fig2)
+    ax2.tick_params(labelsize=8)
+    fig.autofmt_xdate()
+    fig.tight_layout()
+    st.pyplot(fig, width="stretch")
+    plt.close(fig)
+    st.caption(
+        f"Buy/sell markers are thinned to about {MAX_MARKERS} of each for readability "
+        f"({n_buy} buys and {n_sell} sells actually occurred). "
+        "The full trade count is in Key results."
+    )
 
 with right:
     st.subheader("Key results")
     s = out["stats"]
-    st.metric("Total return", f"{100.0 * s['total_return']:.2f}%")
-    st.metric("Sharpe ratio", f"{s['sharpe']:.3f}")
-    st.metric("Maximum drawdown", f"{100.0 * s['max_drawdown']:.2f}%")
-    st.metric("Number of trades", f"{s['n_trades']}")
+    m1, m2 = st.columns(2)
+    m1.metric("Total return", f"{100.0 * s['total_return']:.2f}%")
+    m2.metric("Sharpe", f"{s['sharpe']:.3f}")
+    m3, m4 = st.columns(2)
+    m3.metric("Max drawdown", f"{100.0 * s['max_drawdown']:.2f}%")
+    m4.metric("Trades", f"{s['n_trades']}")
     st.metric("Transaction costs", f"${s['transaction_costs']:.2f}")
 
     st.subheader("Current position")
     st.write(f"Cash: ${out['cash']:.2f}")
     st.write(f"Shares held: {int(out['shares'])}")
-    st.write(f"Current action: {out['last_action']}")
-    st.caption("Buy-and-hold return on this window: "
-               f"{100.0 * out['bh_stats']['total_return']:.2f}%")
+    st.write(f"Last action: {out['last_action']}")
+    st.caption(
+        "Buy-and-hold return on this window: "
+        f"{100.0 * out['bh_stats']['total_return']:.2f}%"
+    )
