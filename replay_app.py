@@ -37,10 +37,10 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-MODELS = {
-    "Double + Dueling DQN": (ROOT / "Double_Dueling_DQN.pt", True),
-    "DQN": (ROOT / "DQN.pt", False),
-}
+# Final demo uses the Part C winner on validation Sharpe.
+MODEL_PATH = ROOT / "Double_Dueling_DQN.pt"
+MODEL_DUELING = True
+MODEL_LABEL = "Double + Dueling DQN"
 
 PERIODS = {
     "2020-2022 validation": ("2020-01-01", "2022-12-31"),
@@ -84,7 +84,7 @@ def buy_hold_curve(opens, closes, start, n_steps):
     return np.asarray(values), 1 if qty else 0, fee
 
 
-def replay(model_name, period_name):
+def replay(period_name):
     data, market = load_dataset()
     opens = data["Open"].to_numpy()
     closes = data["Close"].to_numpy()
@@ -94,9 +94,8 @@ def replay(model_name, period_name):
     start = int(idxs[0])
     horizon = int(idxs[-1] - start - 1)
 
-    path, dueling = MODELS[model_name]
-    net = QNet(dueling).to(DEVICE)
-    state = torch.load(path, map_location=DEVICE, weights_only=True)
+    net = QNet(MODEL_DUELING).to(DEVICE)
+    state = torch.load(MODEL_PATH, map_location=DEVICE, weights_only=True)
     net.load_state_dict(state)
     policy = greedy_policy(net)
 
@@ -142,17 +141,13 @@ def replay(model_name, period_name):
 
 st.title("RL Trading Agent")
 st.caption(
-    "Offline replay dashboard. Loads a saved model and replays decisions. "
+    f"Offline replay of the selected {MODEL_LABEL} agent. "
     "Does not connect to live markets or place real trades."
 )
 
-c1, c2 = st.columns(2)
-with c1:
-    period_name = st.selectbox("Evaluation period", list(PERIODS.keys()), index=0)
-with c2:
-    model_name = st.selectbox("Saved model", list(MODELS.keys()), index=0)
+period_name = st.selectbox("Evaluation period", list(PERIODS.keys()), index=0)
 
-out = replay(model_name, period_name)
+out = replay(period_name)
 dates = out["dates"]
 actions = out["actions"]
 buy_idx = thin_markers(np.where(actions == 1)[0])
