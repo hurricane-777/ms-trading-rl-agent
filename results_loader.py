@@ -156,10 +156,7 @@ def per_run_rows(data: dict, split: str, weights: str) -> list[dict]:
         row = {
             "Variant": run["variant"],
             "Seed": int(run["seed"]),
-            "Episodes": run["episodes"],
             "Selected episode": run["selected_episode"],
-            "Selection score": run["selection_score"],
-            "Minutes": run["minutes"],
         }
         for key in METRIC_KEYS:
             row[key] = metrics[key]

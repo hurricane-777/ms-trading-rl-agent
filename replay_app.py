@@ -64,7 +64,6 @@ def _show_metrics(metrics: dict) -> None:
     m5, m6 = st.columns(2)
     m5.metric("Transaction costs", f"${metrics['transaction_costs']:,.0f}")
     m6.metric("Final value", f"${metrics['final_value']:,.2f}")
-    st.caption(f"Average invested: {100.0 * metrics['avg_exposure']:.0f}% of the portfolio.")
 
 
 def _present(rows: list[dict]) -> list[dict]:
@@ -100,11 +99,6 @@ except (OSError, ValueError) as exc:
 
 cfg = results["config"]
 st.title("RL Trading Agent")
-st.caption(
-    "Draft 2 final results for four variants and seeds 0, 1 and 2. "
-    f"Numbers are read from final_results.json ({results['data_source']}). "
-    "No live market and no retraining."
-)
 
 weights_for = {
     "Train": ["selected"],
@@ -125,10 +119,6 @@ weights = right.selectbox(
 )
 
 st.subheader("Trade view")
-st.caption(
-    "The chart replays the same split and the same weights as the table. "
-    "The numbers beside it are the saved metrics, not a new score."
-)
 variants = list(results["variants"])
 pick_left, pick_mid = st.columns(2)
 variant = pick_left.selectbox("Variant", variants, index=variants.index("Double + Dueling DQN"))
@@ -142,13 +132,6 @@ ckpt = checkpoint_path(variant, seed, weights, root)
 chart_col, stat_col = st.columns([2.15, 0.95])
 with stat_col:
     st.markdown(f"**{variant}, seed {seed}**")
-    st.write(
-        f"Selected at episode {run['selected_episode']} "
-        f"(selection score {run['selection_score']:.4f}). "
-        f"Trained for {run['episodes']} episodes, {run['minutes']:.1f} min."
-    )
-    weight_label = "selected checkpoint" if weights == "selected" else "final weights"
-    st.markdown(f"Saved {split.lower()} metrics, {weight_label}")
     _show_metrics(saved)
     if not ckpt.is_file():
         st.warning(f"Checkpoint is not next to the app: {ckpt.name}")
@@ -176,8 +159,6 @@ with chart_col:
             actions = out["actions"]
             buy_idx = thin_markers(np.where(actions == 1)[0])
             sell_idx = thin_markers(np.where(actions == 2)[0])
-            n_buy = int((actions == 1).sum())
-            n_sell = int((actions == 2).sum())
             fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9.2, 5.0), sharex=True)
             ax1.set_title("Stock price over time", loc="left", fontsize=11, pad=4)
             ax1.plot(dates, out["prices"], color="black", linewidth=1.15)
@@ -198,21 +179,12 @@ with chart_col:
             fig.tight_layout()
             st.pyplot(fig, width="stretch")
             plt.close(fig)
-            st.caption(
-                f"Buy/sell markers are thinned to about {MAX_MARKERS} of each "
-                f"({n_buy} buys and {n_sell} sells in this replay of {ckpt.name}). "
-                f"End of replay: ${out['cash']:.2f} cash, {out['shares']} shares."
-            )
     else:
         st.info(f"Add {ckpt.name} under runs/ to draw the trade chart.")
 
 per_run = per_run_rows(results, split, weights)
 st.subheader(f"{split} · {weights} weights")
 st.dataframe(_frame(per_run, formatted=True), width="stretch", hide_index=True)
-st.caption(
-    "Each row is one saved run. Total return, drawdown and average invested are fractions in the file "
-    "and shown here as percents. Selection score is the validation Sharpe used to keep the checkpoint."
-)
 
 st.subheader("Mean ± sample std")
 st.dataframe(_frame(summary_rows(results, split, weights)), width="stretch", hide_index=True)
@@ -221,8 +193,3 @@ baselines = baseline_rows(results, split)
 if baselines:
     st.subheader("Baselines")
     st.dataframe(_frame(baselines), width="stretch", hide_index=True)
-    st.caption(
-        "Buy-and-hold on the training split is one stored dict. "
-        "Validation and test baselines are stored as lists; a list of one is shown as that row, "
-        "and Random is the mean ± sample std of the 100 stored seeds."
-    )
