@@ -59,8 +59,14 @@ def run_name(variant: str, seed: int) -> str:
     return f"{variant.lower().replace(' + ', '_').replace(' ', '_')}_seed{int(seed)}"
 
 
+def checkpoint_path(variant: str, seed: int, weights: str = "selected", root: Path | None = None) -> Path:
+    if weights not in ("selected", "final"):
+        raise ValueError(f"unknown weights {weights!r}")
+    return (root or artifact_root()) / "runs" / f"{run_name(variant, seed)}_{weights}.pt"
+
+
 def selected_checkpoint(variant: str, seed: int, root: Path | None = None) -> Path:
-    return (root or artifact_root()) / "runs" / f"{run_name(variant, seed)}_selected.pt"
+    return checkpoint_path(variant, seed, "selected", root)
 
 
 def load_results(path: Path | None = None) -> dict:

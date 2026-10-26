@@ -1,6 +1,7 @@
-"""Replay one selected checkpoint on the price file that sits next to final_results.json.
+"""Replay one saved checkpoint on the price file that sits next to final_results.json.
 
-The chart is a fresh rollout. Headline metrics stay in final_results.json.
+The chart is a fresh rollout of runs/*_selected.pt or runs/*_final.pt.
+Headline metrics stay in final_results.json.
 """
 
 from __future__ import annotations
@@ -11,7 +12,7 @@ import numpy as np
 import pandas as pd
 import torch
 
-from results_loader import artifact_root, selected_checkpoint
+from results_loader import artifact_root, checkpoint_path
 from run_partc_trial import (
     DEVICE,
     QNet,
@@ -48,9 +49,19 @@ def window(data: pd.DataFrame, start: str, end: str) -> tuple[int, int]:
     return start_i, horizon
 
 
-def replay_selected(variant: str, seed: int, dueling: bool, start: str, end: str, root: Path | None = None):
+def replay_checkpoint(
+    variant: str,
+    seed: int,
+    dueling: bool,
+    start: str,
+    end: str,
+    weights: str = "selected",
+    root: Path | None = None,
+    initial_capital: float = 10_000.0,
+    cost_rate: float = 0.001,
+):
     root = root or artifact_root()
-    path = selected_checkpoint(variant, seed, root)
+    path = checkpoint_path(variant, seed, weights, root)
     if not path.is_file():
         raise FileNotFoundError(path)
     data, market = load_market(root)
@@ -80,12 +91,12 @@ def replay_selected(variant: str, seed: int, dueling: bool, start: str, end: str
         done = term or trunc
 
     # Buy-and-hold on the same window, for the chart only.
-    cash = 10_000.0
+    cash = float(initial_capital)
     fill = float(opens[start_i + 1])
-    qty = int(cash / (fill * 1.001))
-    fee = 0.001 * qty * fill
+    qty = int(cash / (fill * (1.0 + cost_rate)))
+    fee = cost_rate * qty * fill
     cash -= qty * fill + fee
-    bh = [10_000.0]
+    bh = [float(initial_capital)]
     for t in range(start_i + 1, start_i + 1 + len(actions)):
         bh.append(cash + qty * closes[t])
 

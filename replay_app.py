@@ -1,7 +1,8 @@
 """Offline dashboard for the Draft 2 AAPL runs.
 
-Metrics are read from final_results.json. The trade chart replays runs/*_selected.pt
-on aapl_ohlcv.csv. It does not train, and it does not place trades.
+Metrics are read from final_results.json. The trade chart replays
+runs/*_selected.pt or runs/*_final.pt on aapl_ohlcv.csv, matching the
+split and weights chosen above. It does not train, and it does not place trades.
 """
 
 from __future__ import annotations
@@ -20,10 +21,10 @@ from results_loader import (
     load_results,
     metric_block,
     per_run_rows,
-    selected_checkpoint,
+    checkpoint_path,
     summary_rows,
 )
-from trade_replay import replay_selected
+from trade_replay import replay_checkpoint
 
 st.set_page_config(page_title="RL Trading Agent", layout="wide")
 st.markdown(
@@ -113,9 +114,14 @@ weights_for = {
 }
 left, right = st.columns(2)
 split = left.selectbox("Split", list(weights_for), index=1)
+weight_options = weights_for[split]
+# Keep Final weights when the split changes, and drop it on Train, which has no final block.
+if st.session_state.get("weights-widget") not in weight_options:
+    st.session_state["weights-widget"] = weight_options[0]
 weights = right.selectbox(
     "Weights",
-    weights_for[split],
+    weight_options,
+    key="weights-widget",
     format_func=lambda name: "Selected checkpoint" if name == "selected" else "Final weights",
 )
 
@@ -141,17 +147,19 @@ if baselines:
     )
 
 st.subheader("Trade view")
-st.caption("The chart replays the selected checkpoint. The metrics beside it are the saved ones, not a new score.")
+st.caption(
+    "The chart replays the same split and the same weights as the table. "
+    "The numbers beside it are the saved metrics, not a new score."
+)
 variants = list(results["variants"])
-pick_left, pick_mid, pick_right = st.columns(3)
+pick_left, pick_mid = st.columns(2)
 variant = pick_left.selectbox("Variant", variants, index=variants.index("Double + Dueling DQN"))
 seed = int(pick_mid.selectbox("Seed", [int(s) for s in results["seeds"]]))
-period = pick_right.selectbox("Chart period", ["Validation", "Test"])
-period_start = cfg["val_start"] if period == "Validation" else cfg["test_start"]
-period_end = cfg["val_end"] if period == "Validation" else cfg["test_end"]
+period_start = cfg[{"Train": "train_start", "Validation": "val_start", "Test": "test_start"}[split]]
+period_end = cfg[{"Train": "train_end", "Validation": "val_end", "Test": "test_end"}[split]]
 run = find_run(results, variant, seed)
 saved = metric_block(run, split, weights)
-ckpt = selected_checkpoint(variant, seed, root)
+ckpt = checkpoint_path(variant, seed, weights, root)
 
 chart_col, stat_col = st.columns([2.15, 0.95])
 with stat_col:
@@ -161,23 +169,25 @@ with stat_col:
         f"(selection score {run['selection_score']:.4f}). "
         f"Trained for {run['episodes']} episodes, {run['minutes']:.1f} min."
     )
-    st.markdown(f"Saved {split.lower()} metrics, {weights} weights")
+    weight_label = "selected checkpoint" if weights == "selected" else "final weights"
+    st.markdown(f"Saved {split.lower()} metrics, {weight_label}")
     _show_metrics(saved)
-    if not (split == period and weights == "selected"):
-        st.caption(f"The chart is the selected checkpoint on {period} ({period_start} to {period_end}).")
     if not ckpt.is_file():
-        st.warning(f"Selected checkpoint is not in the repo: {ckpt.name}")
+        st.warning(f"Checkpoint is not next to the app: {ckpt.name}")
 
 with chart_col:
     if ckpt.is_file():
         try:
-            out = replay_selected(
+            out = replay_checkpoint(
                 variant,
                 seed,
                 bool(results["variants"][variant]["dueling"]),
                 period_start,
                 period_end,
+                weights,
                 root,
+                initial_capital=float(results["environment"]["initial_capital"]),
+                cost_rate=float(results["environment"]["cost_rate"]),
             )
         except Exception as exc:
             st.error(f"Could not replay {ckpt.name}: {exc}")
@@ -216,10 +226,14 @@ with chart_col:
                 f"End of replay: ${out['cash']:.2f} cash, {out['shares']} shares."
             )
     else:
-        st.info("Add the selected checkpoint under runs/ to draw the trade chart.")
+        st.info(f"Add {ckpt.name} under runs/ to draw the trade chart.")
 
 saved_figs = figures(root)
 if saved_figs:
     st.subheader("Figures saved with the runs")
+    st.caption(
+        "These are the PNG files written with the notebook. "
+        "They do not follow the split and weights controls."
+    )
     for path in saved_figs:
         st.image(str(path), caption=path.name, width="stretch")
