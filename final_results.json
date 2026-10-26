@@ -1,0 +1,2584 @@
+{
+  "config": {
+    "ticker": "AAPL",
+    "train_start": "2010-01-01",
+    "train_end": "2019-12-31",
+    "val_start": "2020-01-01",
+    "val_end": "2022-12-31",
+    "test_start": "2023-01-01",
+    "test_end": "2024-12-31",
+    "steps": 200000,
+    "eval_every_episodes": 10,
+    "select_window": 5,
+    "gamma": 0.99,
+    "lr": 0.0001,
+    "batch_size": 64,
+    "replay_size": 100000,
+    "warmup": 5000,
+    "tau": 0.005,
+    "eps_start": 1.0,
+    "eps_end": 0.05,
+    "eps_decay_steps": 50000,
+    "hidden": 128,
+    "random_baseline_seeds": 100
+  },
+  "environment": {
+    "initial_capital": 10000.0,
+    "lot_notional": 1000.0,
+    "cost_rate": 0.001,
+    "episode_len": 252,
+    "invalid_penalty": -0.01
+  },
+  "data_source": "Yahoo Finance via yfinance (split- and dividend-adjusted); downloaded 2026-10-25",
+  "variants": {
+    "DQN": {
+      "double": false,
+      "dueling": false
+    },
+    "Double DQN": {
+      "double": true,
+      "dueling": false
+    },
+    "Dueling DQN": {
+      "double": false,
+      "dueling": true
+    },
+    "Double + Dueling DQN": {
+      "double": true,
+      "dueling": true
+    }
+  },
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "test_used": true,
+  "runs": [
+    {
+      "variant": "Double + Dueling DQN",
+      "seed": 0,
+      "episodes": 793,
+      "selected_episode": 760,
+      "selection_score": 1.1809125172595702,
+      "minutes": 6.623243677616119,
+      "metrics": {
+        "train": {
+          "total_return": 1.5573242332063448,
+          "sharpe": 1.1059641195695287,
+          "max_drawdown": -0.11604884118225756,
+          "n_trades": 820,
+          "transaction_costs": 785.6363969324929,
+          "final_value": 25573.242332063448,
+          "avg_exposure": 0.18380415325717825
+        },
+        "val": {
+          "total_return": 0.5383013345856105,
+          "sharpe": 1.172877312405819,
+          "max_drawdown": -0.13875282581142978,
+          "n_trades": 391,
+          "transaction_costs": 353.9669685331624,
+          "final_value": 15383.013345856105,
+          "avg_exposure": 0.3175112897122288
+        },
+        "val_final": {
+          "total_return": 0.5859662794537768,
+          "sharpe": 1.1830413069318577,
+          "max_drawdown": -0.1539782053993065,
+          "n_trades": 428,
+          "transaction_costs": 384.75669439937167,
+          "final_value": 15859.662794537768,
+          "avg_exposure": 0.32699743819084337
+        },
+        "test": {
+          "total_return": 0.5789711254954846,
+          "sharpe": 1.3574898973092688,
+          "max_drawdown": -0.15904751282270424,
+          "n_trades": 194,
+          "transaction_costs": 173.73470909955296,
+          "final_value": 15789.711254954846,
+          "avg_exposure": 0.8319198142036285
+        },
+        "test_final": {
+          "total_return": 0.6089363722035155,
+          "sharpe": 1.3919073779587563,
+          "max_drawdown": -0.15711040838967327,
+          "n_trades": 208,
+          "transaction_costs": 187.1673748374971,
+          "final_value": 16089.363722035154,
+          "avg_exposure": 0.8589760911072645
+        }
+      }
+    },
+    {
+      "variant": "Double + Dueling DQN",
+      "seed": 1,
+      "episodes": 793,
+      "selected_episode": 30,
+      "selection_score": 0.587493614255312,
+      "minutes": 6.51550076007843,
+      "metrics": {
+        "train": {
+          "total_return": 8.030532729536397,
+          "sharpe": 1.0157604202454367,
+          "max_drawdown": -0.43804963318720713,
+          "n_trades": 54,
+          "transaction_costs": 51.633894095208774,
+          "final_value": 90305.32729536397,
+          "avg_exposure": 0.9884450401689372
+        },
+        "val": {
+          "total_return": 0.41775691684552774,
+          "sharpe": 0.5121916705531327,
+          "max_drawdown": -0.3014491856043118,
+          "n_trades": 68,
+          "transaction_costs": 60.198721079128745,
+          "final_value": 14177.569168455277,
+          "avg_exposure": 0.9323066068907401
+        },
+        "val_final": {
+          "total_return": 0.2844397014952995,
+          "sharpe": 0.4262521925791513,
+          "max_drawdown": -0.31824146351859073,
+          "n_trades": 379,
+          "transaction_costs": 347.22251053478976,
+          "final_value": 12844.397014952996,
+          "avg_exposure": 0.6939612388597092
+        },
+        "test": {
+          "total_return": 0.9140234467210049,
+          "sharpe": 1.711696363156221,
+          "max_drawdown": -0.1527485945890874,
+          "n_trades": 62,
+          "transaction_costs": 54.751985033669285,
+          "final_value": 19140.234467210048,
+          "avg_exposure": 0.9436367013180422
+        },
+        "test_final": {
+          "total_return": 0.34186292235424975,
+          "sharpe": 0.9310550724597204,
+          "max_drawdown": -0.16349348349694537,
+          "n_trades": 155,
+          "transaction_costs": 135.66534959437723,
+          "final_value": 13418.629223542497,
+          "avg_exposure": 0.6870417543957459
+        }
+      }
+    },
+    {
+      "variant": "Double + Dueling DQN",
+      "seed": 2,
+      "episodes": 793,
+      "selected_episode": 470,
+      "selection_score": 0.8722274383967121,
+      "minutes": 6.533508658409119,
+      "metrics": {
+        "train": {
+          "total_return": 1.1299017253548618,
+          "sharpe": 0.8202175499141298,
+          "max_drawdown": -0.12627217539671087,
+          "n_trades": 555,
+          "transaction_costs": 523.563032381253,
+          "final_value": 21299.01725354862,
+          "avg_exposure": 0.1657121678403834
+        },
+        "val": {
+          "total_return": 0.6024408191070565,
+          "sharpe": 0.8145123529416619,
+          "max_drawdown": -0.20369091679456908,
+          "n_trades": 414,
+          "transaction_costs": 382.49896563654954,
+          "final_value": 16024.408191070564,
+          "avg_exposure": 0.3681905184186018
+        },
+        "val_final": {
+          "total_return": 0.1290439061644837,
+          "sharpe": 0.28518684294027624,
+          "max_drawdown": -0.3443974388253521,
+          "n_trades": 391,
+          "transaction_costs": 356.3294984645847,
+          "final_value": 11290.439061644836,
+          "avg_exposure": 0.6713669755313821
+        },
+        "test": {
+          "total_return": 0.3648986601557327,
+          "sharpe": 0.9623740130868021,
+          "max_drawdown": -0.16242970563409298,
+          "n_trades": 218,
+          "transaction_costs": 193.56415260732348,
+          "final_value": 13648.986601557326,
+          "avg_exposure": 0.7640349396394742
+        },
+        "test_final": {
+          "total_return": 0.4984344136075889,
+          "sharpe": 1.2248594924869523,
+          "max_drawdown": -0.16541751491452217,
+          "n_trades": 240,
+          "transaction_costs": 214.3004492026441,
+          "final_value": 14984.344136075888,
+          "avg_exposure": 0.7780271557770734
+        }
+      }
+    },
+    {
+      "variant": "DQN",
+      "seed": 0,
+      "episodes": 793,
+      "selected_episode": 40,
+      "selection_score": 0.6549438922157824,
+      "minutes": 5.077395327885946,
+      "metrics": {
+        "train": {
+          "total_return": 8.18628556061272,
+          "sharpe": 1.0266261164714099,
+          "max_drawdown": -0.4395979633288899,
+          "n_trades": 48,
+          "transaction_costs": 45.95262274293885,
+          "final_value": 91862.85560612721,
+          "avg_exposure": 0.9852954725345834
+        },
+        "val": {
+          "total_return": 0.5280511952185591,
+          "sharpe": 0.5859675050490997,
+          "max_drawdown": -0.3050933958028883,
+          "n_trades": 96,
+          "transaction_costs": 88.92704164659702,
+          "final_value": 15280.511952185592,
+          "avg_exposure": 0.9085391360399602
+        },
+        "val_final": {
+          "total_return": 0.32258907486981525,
+          "sharpe": 0.47730052151549396,
+          "max_drawdown": -0.2775039337266584,
+          "n_trades": 398,
+          "transaction_costs": 359.90325249271575,
+          "final_value": 13225.890748698153,
+          "avg_exposure": 0.5954661017104959
+        },
+        "test": {
+          "total_return": 0.9203195974025475,
+          "sharpe": 1.6714878581440415,
+          "max_drawdown": -0.16541040864646972,
+          "n_trades": 17,
+          "transaction_costs": 15.279905754402618,
+          "final_value": 19203.195974025475,
+          "avg_exposure": 0.9814445683399181
+        },
+        "test_final": {
+          "total_return": 0.5062699279285592,
+          "sharpe": 1.2322253883349168,
+          "max_drawdown": -0.14876178651449967,
+          "n_trades": 182,
+          "transaction_costs": 162.59266268198166,
+          "final_value": 15062.699279285593,
+          "avg_exposure": 0.7591310260934985
+        }
+      }
+    },
+    {
+      "variant": "DQN",
+      "seed": 1,
+      "episodes": 793,
+      "selected_episode": 40,
+      "selection_score": 0.6179651968443287,
+      "minutes": 5.110154585043589,
+      "metrics": {
+        "train": {
+          "total_return": 7.790066951915048,
+          "sharpe": 1.005548273791993,
+          "max_drawdown": -0.4372590207243485,
+          "n_trades": 193,
+          "transaction_costs": 182.08206815023541,
+          "final_value": 87900.66951915048,
+          "avg_exposure": 0.9866588864878675
+        },
+        "val": {
+          "total_return": 0.48453641918894275,
+          "sharpe": 0.5571166981400147,
+          "max_drawdown": -0.30250465145601824,
+          "n_trades": 67,
+          "transaction_costs": 59.24108092532314,
+          "final_value": 14845.364191889426,
+          "avg_exposure": 0.941679785872402
+        },
+        "val_final": {
+          "total_return": 0.10374382153858175,
+          "sharpe": 0.25935865033094985,
+          "max_drawdown": -0.37585046659563914,
+          "n_trades": 435,
+          "transaction_costs": 399.2171475412819,
+          "final_value": 11037.438215385817,
+          "avg_exposure": 0.6586315545181196
+        },
+        "test": {
+          "total_return": 0.8792265320771109,
+          "sharpe": 1.6456523839228994,
+          "max_drawdown": -0.15871179748165043,
+          "n_trades": 52,
+          "transaction_costs": 46.65994560170029,
+          "final_value": 18792.26532077111,
+          "avg_exposure": 0.9594021507214844
+        },
+        "test_final": {
+          "total_return": 0.37963235894963154,
+          "sharpe": 1.0449238923768114,
+          "max_drawdown": -0.15065081493934696,
+          "n_trades": 181,
+          "transaction_costs": 161.38038005169565,
+          "final_value": 13796.323589496316,
+          "avg_exposure": 0.654084759655164
+        }
+      }
+    },
+    {
+      "variant": "DQN",
+      "seed": 2,
+      "episodes": 793,
+      "selected_episode": 30,
+      "selection_score": 0.6505292563018445,
+      "minutes": 5.102945737044016,
+      "metrics": {
+        "train": {
+          "total_return": 7.918065565841644,
+          "sharpe": 1.0178531792870373,
+          "max_drawdown": -0.4325472934472997,
+          "n_trades": 170,
+          "transaction_costs": 162.23132195447855,
+          "final_value": 89180.65565841645,
+          "avg_exposure": 0.9821842679722583
+        },
+        "val": {
+          "total_return": 0.6695853548020452,
+          "sharpe": 0.6527926394084305,
+          "max_drawdown": -0.3111087532701413,
+          "n_trades": 57,
+          "transaction_costs": 50.7262692854529,
+          "final_value": 16695.853548020452,
+          "avg_exposure": 0.9599126304094912
+        },
+        "val_final": {
+          "total_return": 0.2554853036904967,
+          "sharpe": 0.42610556120215015,
+          "max_drawdown": -0.28267133264123756,
+          "n_trades": 335,
+          "transaction_costs": 303.3170566475116,
+          "final_value": 12554.853036904968,
+          "avg_exposure": 0.6338257001523996
+        },
+        "test": {
+          "total_return": 0.8428905364116723,
+          "sharpe": 1.593023530886459,
+          "max_drawdown": -0.15605374754084989,
+          "n_trades": 65,
+          "transaction_costs": 55.66141998788272,
+          "final_value": 18428.905364116723,
+          "avg_exposure": 0.9627853263454035
+        },
+        "test_final": {
+          "total_return": 0.4478717125310001,
+          "sharpe": 1.1408099900034332,
+          "max_drawdown": -0.13942359949137395,
+          "n_trades": 173,
+          "transaction_costs": 156.36545994622992,
+          "final_value": 14478.71712531,
+          "avg_exposure": 0.7323907929607107
+        }
+      }
+    },
+    {
+      "variant": "Double DQN",
+      "seed": 0,
+      "episodes": 793,
+      "selected_episode": 40,
+      "selection_score": 0.6480437738580438,
+      "minutes": 5.3480652610460915,
+      "metrics": {
+        "train": {
+          "total_return": 8.172092886280629,
+          "sharpe": 1.0207635374550936,
+          "max_drawdown": -0.43829715926051027,
+          "n_trades": 47,
+          "transaction_costs": 45.839674819720976,
+          "final_value": 91720.9288628063,
+          "avg_exposure": 0.9902067561005743
+        },
+        "val": {
+          "total_return": 0.43201357618406866,
+          "sharpe": 0.5255775568526074,
+          "max_drawdown": -0.3030041135782944,
+          "n_trades": 106,
+          "transaction_costs": 99.41301564787318,
+          "final_value": 14320.135761840686,
+          "avg_exposure": 0.9215127895904585
+        },
+        "val_final": {
+          "total_return": 0.3296138735935996,
+          "sharpe": 0.49358064816871655,
+          "max_drawdown": -0.3063101643672046,
+          "n_trades": 383,
+          "transaction_costs": 348.5692236548675,
+          "final_value": 13296.138735935996,
+          "avg_exposure": 0.4706009368902733
+        },
+        "test": {
+          "total_return": 0.897111587476797,
+          "sharpe": 1.6439335348421953,
+          "max_drawdown": -0.1652188808543016,
+          "n_trades": 17,
+          "transaction_costs": 15.263386589133987,
+          "final_value": 18971.11587476797,
+          "avg_exposure": 0.9792770413412057
+        },
+        "test_final": {
+          "total_return": 0.5536673652451658,
+          "sharpe": 1.2621791778879465,
+          "max_drawdown": -0.16196415237359318,
+          "n_trades": 150,
+          "transaction_costs": 136.5775042346682,
+          "final_value": 15536.673652451658,
+          "avg_exposure": 0.8098928600937542
+        }
+      }
+    },
+    {
+      "variant": "Double DQN",
+      "seed": 1,
+      "episodes": 793,
+      "selected_episode": 200,
+      "selection_score": 0.727481646171775,
+      "minutes": 5.393828586737315,
+      "metrics": {
+        "train": {
+          "total_return": 6.192072674268302,
+          "sharpe": 1.0233467799979712,
+          "max_drawdown": -0.40469177437590576,
+          "n_trades": 1270,
+          "transaction_costs": 1239.6661479437266,
+          "final_value": 71920.72674268302,
+          "avg_exposure": 0.8408634693151942
+        },
+        "val": {
+          "total_return": 0.7848976683357793,
+          "sharpe": 0.7918047520180692,
+          "max_drawdown": -0.29115670345348044,
+          "n_trades": 278,
+          "transaction_costs": 252.25161969418426,
+          "final_value": 17848.976683357792,
+          "avg_exposure": 0.8665390660745165
+        },
+        "val_final": {
+          "total_return": 0.023655323262850914,
+          "sharpe": 0.1779826910775838,
+          "max_drawdown": -0.29963590192850276,
+          "n_trades": 286,
+          "transaction_costs": 255.05714549827476,
+          "final_value": 10236.553232628508,
+          "avg_exposure": 0.6580675690721176
+        },
+        "test": {
+          "total_return": 0.8123732279822642,
+          "sharpe": 1.6664082502834112,
+          "max_drawdown": -0.15738758293242272,
+          "n_trades": 126,
+          "transaction_costs": 111.34221075888141,
+          "final_value": 18123.73227982264,
+          "avg_exposure": 0.8645621458496143
+        },
+        "test_final": {
+          "total_return": 0.3116305543777098,
+          "sharpe": 0.8572941315305905,
+          "max_drawdown": -0.1687661681279834,
+          "n_trades": 191,
+          "transaction_costs": 170.81427748787644,
+          "final_value": 13116.305543777098,
+          "avg_exposure": 0.7376338610301383
+        }
+      }
+    },
+    {
+      "variant": "Double DQN",
+      "seed": 2,
+      "episodes": 793,
+      "selected_episode": 660,
+      "selection_score": 1.1362334916023056,
+      "minutes": 5.389971431096395,
+      "metrics": {
+        "train": {
+          "total_return": 1.6225601363231328,
+          "sharpe": 1.2035828016939432,
+          "max_drawdown": -0.1306033963161337,
+          "n_trades": 657,
+          "transaction_costs": 622.5504238928849,
+          "final_value": 26225.60136323133,
+          "avg_exposure": 0.14871583918451464
+        },
+        "val": {
+          "total_return": 0.7397737782765132,
+          "sharpe": 1.0937590247125486,
+          "max_drawdown": -0.21753317092030933,
+          "n_trades": 431,
+          "transaction_costs": 392.86640350958766,
+          "final_value": 17397.737782765133,
+          "avg_exposure": 0.45090517053054574
+        },
+        "val_final": {
+          "total_return": 0.6641628917528661,
+          "sharpe": 0.9924030797377971,
+          "max_drawdown": -0.1750768105179512,
+          "n_trades": 391,
+          "transaction_costs": 357.79472022667187,
+          "final_value": 16641.628917528662,
+          "avg_exposure": 0.4733663842006302
+        },
+        "test": {
+          "total_return": 0.5938615244569576,
+          "sharpe": 1.360490065811854,
+          "max_drawdown": -0.15061165000859145,
+          "n_trades": 219,
+          "transaction_costs": 195.72018779007277,
+          "final_value": 15938.615244569577,
+          "avg_exposure": 0.7954036357791434
+        },
+        "test_final": {
+          "total_return": 0.6106550619836533,
+          "sharpe": 1.3356922404802078,
+          "max_drawdown": -0.16454769987392104,
+          "n_trades": 151,
+          "transaction_costs": 135.51692381415103,
+          "final_value": 16106.550619836533,
+          "avg_exposure": 0.84966690569516
+        }
+      }
+    },
+    {
+      "variant": "Dueling DQN",
+      "seed": 0,
+      "episodes": 793,
+      "selected_episode": 40,
+      "selection_score": 0.6516718230211362,
+      "minutes": 6.151519743601481,
+      "metrics": {
+        "train": {
+          "total_return": 8.002907703734866,
+          "sharpe": 1.0101971597515358,
+          "max_drawdown": -0.4378240493626555,
+          "n_trades": 26,
+          "transaction_costs": 23.916794562008185,
+          "final_value": 90029.07703734866,
+          "avg_exposure": 0.9927796167510445
+        },
+        "val": {
+          "total_return": 0.5731326170151743,
+          "sharpe": 0.6094058373679521,
+          "max_drawdown": -0.30307317353238117,
+          "n_trades": 42,
+          "transaction_costs": 38.80659445951642,
+          "final_value": 15731.326170151742,
+          "avg_exposure": 0.9571821709106312
+        },
+        "val_final": {
+          "total_return": 0.13923304260805014,
+          "sharpe": 0.2952473201954695,
+          "max_drawdown": -0.27282324000511804,
+          "n_trades": 374,
+          "transaction_costs": 340.4568430761077,
+          "final_value": 11392.330426080502,
+          "avg_exposure": 0.6468065183354978
+        },
+        "test": {
+          "total_return": 0.917503394700089,
+          "sharpe": 1.6621068321761117,
+          "max_drawdown": -0.16571885680267084,
+          "n_trades": 13,
+          "transaction_costs": 11.738994110245017,
+          "final_value": 19175.03394700089,
+          "avg_exposure": 0.985404528354596
+        },
+        "test_final": {
+          "total_return": 0.43110274933942727,
+          "sharpe": 1.0646709963069996,
+          "max_drawdown": -0.15273468205483154,
+          "n_trades": 161,
+          "transaction_costs": 144.009634210155,
+          "final_value": 14311.027493394273,
+          "avg_exposure": 0.7558878012146192
+        }
+      }
+    },
+    {
+      "variant": "Dueling DQN",
+      "seed": 1,
+      "episodes": 793,
+      "selected_episode": 30,
+      "selection_score": 0.6039852287688734,
+      "minutes": 6.1684579412142435,
+      "metrics": {
+        "train": {
+          "total_return": 8.19389190943289,
+          "sharpe": 1.0213908677959436,
+          "max_drawdown": -0.4378543869700364,
+          "n_trades": 33,
+          "transaction_costs": 29.790980091701744,
+          "final_value": 91938.91909432891,
+          "avg_exposure": 0.9907013735401924
+        },
+        "val": {
+          "total_return": 0.43829471336943326,
+          "sharpe": 0.5258169974889251,
+          "max_drawdown": -0.3014275182858557,
+          "n_trades": 58,
+          "transaction_costs": 50.58998465558074,
+          "final_value": 14382.947133694332,
+          "avg_exposure": 0.9331465973253361
+        },
+        "val_final": {
+          "total_return": 0.19409637322211637,
+          "sharpe": 0.3496663980350444,
+          "max_drawdown": -0.30952028991055835,
+          "n_trades": 374,
+          "transaction_costs": 339.962112554931,
+          "final_value": 11940.963732221164,
+          "avg_exposure": 0.6692836215651204
+        },
+        "test": {
+          "total_return": 0.8988931178193398,
+          "sharpe": 1.6640714251012705,
+          "max_drawdown": -0.15256778161731654,
+          "n_trades": 40,
+          "transaction_costs": 36.35261915157111,
+          "final_value": 18988.931178193397,
+          "avg_exposure": 0.9598170353805877
+        },
+        "test_final": {
+          "total_return": 0.5191723989985708,
+          "sharpe": 1.216125093897684,
+          "max_drawdown": -0.16112668850218892,
+          "n_trades": 150,
+          "transaction_costs": 132.85576450884147,
+          "final_value": 15191.723989985709,
+          "avg_exposure": 0.8090545822727879
+        }
+      }
+    },
+    {
+      "variant": "Dueling DQN",
+      "seed": 2,
+      "episodes": 793,
+      "selected_episode": 520,
+      "selection_score": 1.1202438324238053,
+      "minutes": 6.122744071483612,
+      "metrics": {
+        "train": {
+          "total_return": 1.1260783496220768,
+          "sharpe": 1.1618703965390325,
+          "max_drawdown": -0.10853951360048675,
+          "n_trades": 536,
+          "transaction_costs": 502.1902292687319,
+          "final_value": 21260.783496220767,
+          "avg_exposure": 0.10865445873936465
+        },
+        "val": {
+          "total_return": 0.9133462832535411,
+          "sharpe": 1.1673448061293084,
+          "max_drawdown": -0.20264373106924438,
+          "n_trades": 154,
+          "transaction_costs": 141.47408336619876,
+          "final_value": 19133.46283253541,
+          "avg_exposure": 0.2575168606269372
+        },
+        "val_final": {
+          "total_return": 0.6482631098577984,
+          "sharpe": 0.8024816340971518,
+          "max_drawdown": -0.20287958460905497,
+          "n_trades": 396,
+          "transaction_costs": 361.65200145754534,
+          "final_value": 16482.631098577986,
+          "avg_exposure": 0.45397094856383496
+        },
+        "test": {
+          "total_return": 0.30285879736081656,
+          "sharpe": 0.8815126781556126,
+          "max_drawdown": -0.16271027709451102,
+          "n_trades": 204,
+          "transaction_costs": 181.81265914304115,
+          "final_value": 13028.587973608166,
+          "avg_exposure": 0.692339527644522
+        },
+        "test_final": {
+          "total_return": 0.5983716956119467,
+          "sharpe": 1.3493078476344174,
+          "max_drawdown": -0.16232679054703203,
+          "n_trades": 177,
+          "transaction_costs": 157.78211273281664,
+          "final_value": 15983.716956119466,
+          "avg_exposure": 0.8385329542665182
+        }
+      }
+    }
+  ],
+  "baselines": {
+    "train": {
+      "Buy-and-hold": {
+        "total_return": 9.019741020491978,
+        "sharpe": 1.049280104146782,
+        "max_drawdown": -0.4379358615424599,
+        "n_trades": 1,
+        "transaction_costs": 9.987567849179275,
+        "final_value": 100197.41020491978,
+        "avg_exposure": 0.9999086684078126
+      }
+    },
+    "validation": {
+      "Buy-and-hold": [
+        {
+          "total_return": 0.7794909287489904,
+          "sharpe": 0.7071190105866726,
+          "max_drawdown": -0.31280861911565905,
+          "n_trades": 1,
+          "transaction_costs": 9.93871536689418,
+          "final_value": 17794.909287489903,
+          "avg_exposure": 0.9968773108123113
+        }
+      ],
+      "Random (100 seeds)": [
+        {
+          "total_return": -0.18583285419773532,
+          "sharpe": -0.3816045006383189,
+          "max_drawdown": -0.33957502250781213,
+          "n_trades": 482,
+          "transaction_costs": 440.8781836159559,
+          "final_value": 8141.671458022647,
+          "avg_exposure": 0.27465245131634597
+        },
+        {
+          "total_return": 0.09756378179183534,
+          "sharpe": 0.2524457662340917,
+          "max_drawdown": -0.25998660871718915,
+          "n_trades": 469,
+          "transaction_costs": 432.38032414053805,
+          "final_value": 10975.637817918354,
+          "avg_exposure": 0.5597396234129107
+        },
+        {
+          "total_return": 0.6625071652327672,
+          "sharpe": 0.9056357723688578,
+          "max_drawdown": -0.20762504980171825,
+          "n_trades": 483,
+          "transaction_costs": 446.1984950160957,
+          "final_value": 16625.07165232767,
+          "avg_exposure": 0.5093900638249039
+        },
+        {
+          "total_return": 0.36317985851332346,
+          "sharpe": 0.5862914315934483,
+          "max_drawdown": -0.29141989877020325,
+          "n_trades": 480,
+          "transaction_costs": 444.08311445755055,
+          "final_value": 13631.798585133234,
+          "avg_exposure": 0.6141707819449864
+        },
+        {
+          "total_return": 0.5686835850751664,
+          "sharpe": 0.8958601812999163,
+          "max_drawdown": -0.19239566557414967,
+          "n_trades": 450,
+          "transaction_costs": 411.65349737132664,
+          "final_value": 15686.835850751664,
+          "avg_exposure": 0.318177539490369
+        },
+        {
+          "total_return": 0.1230531105782462,
+          "sharpe": 0.2989227371291108,
+          "max_drawdown": -0.20441175745995377,
+          "n_trades": 470,
+          "transaction_costs": 436.73692101708707,
+          "final_value": 11230.531105782462,
+          "avg_exposure": 0.5075329563707569
+        },
+        {
+          "total_return": 0.25657301949927613,
+          "sharpe": 0.6208136099377749,
+          "max_drawdown": -0.16740624188029796,
+          "n_trades": 491,
+          "transaction_costs": 453.273116101625,
+          "final_value": 12565.73019499276,
+          "avg_exposure": 0.3272123023360872
+        },
+        {
+          "total_return": 0.5607800489397239,
+          "sharpe": 0.9066233231060372,
+          "max_drawdown": -0.18213965047552982,
+          "n_trades": 473,
+          "transaction_costs": 435.9798861487128,
+          "final_value": 15607.80048939724,
+          "avg_exposure": 0.3814167331869983
+        },
+        {
+          "total_return": 0.46285109131066426,
+          "sharpe": 0.6449902373015454,
+          "max_drawdown": -0.23910773008211395,
+          "n_trades": 474,
+          "transaction_costs": 437.0724675143511,
+          "final_value": 14628.510913106642,
+          "avg_exposure": 0.44960177526306566
+        },
+        {
+          "total_return": 0.3779593714374745,
+          "sharpe": 0.6307222533037629,
+          "max_drawdown": -0.21574283184985976,
+          "n_trades": 464,
+          "transaction_costs": 427.00861155180394,
+          "final_value": 13779.593714374745,
+          "avg_exposure": 0.5190543857842885
+        },
+        {
+          "total_return": 0.5232066857255493,
+          "sharpe": 0.7472934405569696,
+          "max_drawdown": -0.20404044048957215,
+          "n_trades": 469,
+          "transaction_costs": 430.30788545761675,
+          "final_value": 15232.066857255493,
+          "avg_exposure": 0.5951346791877182
+        },
+        {
+          "total_return": 0.06391522469623201,
+          "sharpe": 0.21055369019590525,
+          "max_drawdown": -0.19792800737305605,
+          "n_trades": 457,
+          "transaction_costs": 418.51364748955143,
+          "final_value": 10639.15224696232,
+          "avg_exposure": 0.4074280961409351
+        },
+        {
+          "total_return": 0.16344028709728997,
+          "sharpe": 0.543898344157803,
+          "max_drawdown": -0.13126382511572554,
+          "n_trades": 447,
+          "transaction_costs": 408.2175845763903,
+          "final_value": 11634.4028709729,
+          "avg_exposure": 0.263998460414195
+        },
+        {
+          "total_return": 0.27672395376097003,
+          "sharpe": 0.4932360759940412,
+          "max_drawdown": -0.2549780143293847,
+          "n_trades": 464,
+          "transaction_costs": 426.3261470670928,
+          "final_value": 12767.239537609701,
+          "avg_exposure": 0.5895035569066168
+        },
+        {
+          "total_return": -0.01317430182502688,
+          "sharpe": 0.07924701997718243,
+          "max_drawdown": -0.20761042867291268,
+          "n_trades": 441,
+          "transaction_costs": 401.26645476567523,
+          "final_value": 9868.256981749731,
+          "avg_exposure": 0.49087656941109364
+        },
+        {
+          "total_return": 0.28059177350196074,
+          "sharpe": 0.4762189771690497,
+          "max_drawdown": -0.21352915492090374,
+          "n_trades": 482,
+          "transaction_costs": 445.159836351715,
+          "final_value": 12805.917735019608,
+          "avg_exposure": 0.643657494560714
+        },
+        {
+          "total_return": 0.19358575336366624,
+          "sharpe": 0.4303604429125384,
+          "max_drawdown": -0.18751819551853588,
+          "n_trades": 449,
+          "transaction_costs": 406.4222479348151,
+          "final_value": 11935.857533636663,
+          "avg_exposure": 0.4850591841281262
+        },
+        {
+          "total_return": 0.4922347048393172,
+          "sharpe": 0.575645277106842,
+          "max_drawdown": -0.28371178180830814,
+          "n_trades": 436,
+          "transaction_costs": 398.77387897396585,
+          "final_value": 14922.347048393172,
+          "avg_exposure": 0.8504294720771821
+        },
+        {
+          "total_return": 0.19926411403396793,
+          "sharpe": 0.4412986988591368,
+          "max_drawdown": -0.242092029465505,
+          "n_trades": 490,
+          "transaction_costs": 449.3898365740446,
+          "final_value": 11992.64114033968,
+          "avg_exposure": 0.3861696664092718
+        },
+        {
+          "total_return": 0.6869721068079899,
+          "sharpe": 1.003581744595111,
+          "max_drawdown": -0.1933429382315921,
+          "n_trades": 492,
+          "transaction_costs": 455.7959315398346,
+          "final_value": 16869.7210680799,
+          "avg_exposure": 0.4499502486814937
+        },
+        {
+          "total_return": 0.6731833766532436,
+          "sharpe": 0.7719605273113109,
+          "max_drawdown": -0.26701230464139925,
+          "n_trades": 461,
+          "transaction_costs": 424.83001656509526,
+          "final_value": 16731.833766532436,
+          "avg_exposure": 0.7709880923604036
+        },
+        {
+          "total_return": 0.7177328927860378,
+          "sharpe": 1.0318279267867243,
+          "max_drawdown": -0.2117473214355884,
+          "n_trades": 473,
+          "transaction_costs": 435.892134044894,
+          "final_value": 17177.328927860377,
+          "avg_exposure": 0.5073745978362416
+        },
+        {
+          "total_return": 0.29864233411212404,
+          "sharpe": 0.5213104576772774,
+          "max_drawdown": -0.2410063705405744,
+          "n_trades": 489,
+          "transaction_costs": 448.84074887400135,
+          "final_value": 12986.42334112124,
+          "avg_exposure": 0.3435441784326991
+        },
+        {
+          "total_return": 0.3066207237999776,
+          "sharpe": 0.6041916804072202,
+          "max_drawdown": -0.21734901796516404,
+          "n_trades": 475,
+          "transaction_costs": 438.0583412532896,
+          "final_value": 13066.207237999777,
+          "avg_exposure": 0.3020809414579821
+        },
+        {
+          "total_return": 0.2602220426298192,
+          "sharpe": 0.5240337275963854,
+          "max_drawdown": -0.1622374661373408,
+          "n_trades": 480,
+          "transaction_costs": 443.0219337701865,
+          "final_value": 12602.220426298192,
+          "avg_exposure": 0.40235608693477887
+        },
+        {
+          "total_return": 0.6241547679321344,
+          "sharpe": 1.0595111439626557,
+          "max_drawdown": -0.13824218255989784,
+          "n_trades": 480,
+          "transaction_costs": 444.3403262123944,
+          "final_value": 16241.547679321344,
+          "avg_exposure": 0.4294024898245133
+        },
+        {
+          "total_return": 0.2679338754641105,
+          "sharpe": 0.6614868434921475,
+          "max_drawdown": -0.13235625784106098,
+          "n_trades": 484,
+          "transaction_costs": 445.6359991914728,
+          "final_value": 12679.338754641105,
+          "avg_exposure": 0.3169007439492127
+        },
+        {
+          "total_return": 0.1447574569197274,
+          "sharpe": 0.33746724392718636,
+          "max_drawdown": -0.23841673958488874,
+          "n_trades": 480,
+          "transaction_costs": 440.84486493239683,
+          "final_value": 11447.574569197273,
+          "avg_exposure": 0.4184992287188822
+        },
+        {
+          "total_return": 0.28794998787675685,
+          "sharpe": 0.7408671428180648,
+          "max_drawdown": -0.09412193711923222,
+          "n_trades": 476,
+          "transaction_costs": 436.1330565847321,
+          "final_value": 12879.499878767569,
+          "avg_exposure": 0.2934084518816975
+        },
+        {
+          "total_return": 0.2887765520972567,
+          "sharpe": 0.44534362974182506,
+          "max_drawdown": -0.2838974492825561,
+          "n_trades": 490,
+          "transaction_costs": 451.81578642518724,
+          "final_value": 12887.765520972567,
+          "avg_exposure": 0.72644146620515
+        },
+        {
+          "total_return": 0.5773242872451851,
+          "sharpe": 0.826996293009022,
+          "max_drawdown": -0.19825455570528228,
+          "n_trades": 455,
+          "transaction_costs": 415.5058643521959,
+          "final_value": 15773.242872451852,
+          "avg_exposure": 0.432483406277601
+        },
+        {
+          "total_return": 0.7205351419137649,
+          "sharpe": 0.9600668392966575,
+          "max_drawdown": -0.18765816376193012,
+          "n_trades": 480,
+          "transaction_costs": 439.4549678198392,
+          "final_value": 17205.35141913765,
+          "avg_exposure": 0.4823384192313423
+        },
+        {
+          "total_return": 0.4915618692134174,
+          "sharpe": 0.7072252262432962,
+          "max_drawdown": -0.24334999389355627,
+          "n_trades": 464,
+          "transaction_costs": 427.20770794502675,
+          "final_value": 14915.618692134174,
+          "avg_exposure": 0.5176031837934936
+        },
+        {
+          "total_return": 0.41350023036940065,
+          "sharpe": 0.5956786962904287,
+          "max_drawdown": -0.20915819688044557,
+          "n_trades": 477,
+          "transaction_costs": 443.57933208776865,
+          "final_value": 14135.002303694007,
+          "avg_exposure": 0.6105169681194687
+        },
+        {
+          "total_return": 0.3715745369499539,
+          "sharpe": 0.5847770322069006,
+          "max_drawdown": -0.22824132831975552,
+          "n_trades": 456,
+          "transaction_costs": 421.54989781399166,
+          "final_value": 13715.745369499538,
+          "avg_exposure": 0.6168761133936809
+        },
+        {
+          "total_return": 0.04907935900015392,
+          "sharpe": 0.1803896368644597,
+          "max_drawdown": -0.24821371075899146,
+          "n_trades": 467,
+          "transaction_costs": 428.6677645219102,
+          "final_value": 10490.79359000154,
+          "avg_exposure": 0.4520030301633985
+        },
+        {
+          "total_return": 1.058675323854818,
+          "sharpe": 1.143999749568673,
+          "max_drawdown": -0.1784381204758715,
+          "n_trades": 479,
+          "transaction_costs": 442.03670156294834,
+          "final_value": 20586.753238548183,
+          "avg_exposure": 0.6762134631559595
+        },
+        {
+          "total_return": 0.14845318210262914,
+          "sharpe": 0.3189895078065934,
+          "max_drawdown": -0.22062557489377987,
+          "n_trades": 459,
+          "transaction_costs": 421.51744727768585,
+          "final_value": 11484.531821026292,
+          "avg_exposure": 0.5945895745882552
+        },
+        {
+          "total_return": 0.44668753712717835,
+          "sharpe": 0.6908965171163267,
+          "max_drawdown": -0.23240104708272102,
+          "n_trades": 448,
+          "transaction_costs": 410.54049626102307,
+          "final_value": 14466.875371271784,
+          "avg_exposure": 0.3366042037973141
+        },
+        {
+          "total_return": 0.2520797601554359,
+          "sharpe": 0.4225419937936527,
+          "max_drawdown": -0.24097875947328318,
+          "n_trades": 470,
+          "transaction_costs": 429.45094266807297,
+          "final_value": 12520.797601554359,
+          "avg_exposure": 0.6166533780345076
+        },
+        {
+          "total_return": 0.6187384305848525,
+          "sharpe": 0.922885502210447,
+          "max_drawdown": -0.1969247803010259,
+          "n_trades": 468,
+          "transaction_costs": 433.364543157718,
+          "final_value": 16187.384305848524,
+          "avg_exposure": 0.4276639190805367
+        },
+        {
+          "total_return": -0.03568231026397206,
+          "sharpe": 0.009367133708828116,
+          "max_drawdown": -0.19079842524566826,
+          "n_trades": 456,
+          "transaction_costs": 415.83556155242246,
+          "final_value": 9643.17689736028,
+          "avg_exposure": 0.4200554373822439
+        },
+        {
+          "total_return": 0.31260226065572905,
+          "sharpe": 0.5682244185198325,
+          "max_drawdown": -0.18711757641034077,
+          "n_trades": 467,
+          "transaction_costs": 428.8625499515541,
+          "final_value": 13126.022606557292,
+          "avg_exposure": 0.4170370230045002
+        },
+        {
+          "total_return": 0.17042570162157689,
+          "sharpe": 0.3780253257851735,
+          "max_drawdown": -0.2346561816411532,
+          "n_trades": 486,
+          "transaction_costs": 448.8691922473665,
+          "final_value": 11704.257016215768,
+          "avg_exposure": 0.40249483941371783
+        },
+        {
+          "total_return": 0.22253644565749453,
+          "sharpe": 0.6138665721940914,
+          "max_drawdown": -0.15680787809815389,
+          "n_trades": 477,
+          "transaction_costs": 439.08391323853846,
+          "final_value": 12225.364456574946,
+          "avg_exposure": 0.30564696388314255
+        },
+        {
+          "total_return": 0.1001752860614098,
+          "sharpe": 0.25966974401943044,
+          "max_drawdown": -0.22362561475262122,
+          "n_trades": 482,
+          "transaction_costs": 444.3143435044422,
+          "final_value": 11001.752860614099,
+          "avg_exposure": 0.45807817922970956
+        },
+        {
+          "total_return": 0.8446581624268226,
+          "sharpe": 1.0527077644073213,
+          "max_drawdown": -0.18459825053175416,
+          "n_trades": 468,
+          "transaction_costs": 427.7320304410661,
+          "final_value": 18446.581624268227,
+          "avg_exposure": 0.5792257992322306
+        },
+        {
+          "total_return": 0.24911449929155016,
+          "sharpe": 0.4592550389882805,
+          "max_drawdown": -0.22744653792525948,
+          "n_trades": 481,
+          "transaction_costs": 441.57022850302735,
+          "final_value": 12491.1449929155,
+          "avg_exposure": 0.47951185870865526
+        },
+        {
+          "total_return": 0.47414441691890796,
+          "sharpe": 0.7081113661368635,
+          "max_drawdown": -0.18260536632282454,
+          "n_trades": 486,
+          "transaction_costs": 451.7097528382693,
+          "final_value": 14741.44416918908,
+          "avg_exposure": 0.5691428426432746
+        },
+        {
+          "total_return": 0.5885845938524985,
+          "sharpe": 0.8977059178067769,
+          "max_drawdown": -0.1478985361895151,
+          "n_trades": 489,
+          "transaction_costs": 454.26754325095834,
+          "final_value": 15885.845938524984,
+          "avg_exposure": 0.4905429045840831
+        },
+        {
+          "total_return": 0.28481824958688473,
+          "sharpe": 0.45824482201738465,
+          "max_drawdown": -0.2587717670382109,
+          "n_trades": 453,
+          "transaction_costs": 414.0620660829855,
+          "final_value": 12848.182495868847,
+          "avg_exposure": 0.5138375282793322
+        },
+        {
+          "total_return": 0.6555833904855612,
+          "sharpe": 0.7376746130650766,
+          "max_drawdown": -0.27918239994800087,
+          "n_trades": 466,
+          "transaction_costs": 428.7008237738143,
+          "final_value": 16555.83390485561,
+          "avg_exposure": 0.7797471736561881
+        },
+        {
+          "total_return": 0.5580624709494189,
+          "sharpe": 0.7466603456839206,
+          "max_drawdown": -0.19035853350465992,
+          "n_trades": 476,
+          "transaction_costs": 440.88096204882686,
+          "final_value": 15580.624709494188,
+          "avg_exposure": 0.6107269688661445
+        },
+        {
+          "total_return": 0.5857110783175299,
+          "sharpe": 0.7456193287552529,
+          "max_drawdown": -0.26111230332159063,
+          "n_trades": 448,
+          "transaction_costs": 410.4060276785672,
+          "final_value": 15857.1107831753,
+          "avg_exposure": 0.7152402491865407
+        },
+        {
+          "total_return": 0.8297487867713467,
+          "sharpe": 1.0537502788569835,
+          "max_drawdown": -0.18942788876831806,
+          "n_trades": 455,
+          "transaction_costs": 420.5694784421355,
+          "final_value": 18297.487867713466,
+          "avg_exposure": 0.571904740305149
+        },
+        {
+          "total_return": 0.18169659952839945,
+          "sharpe": 0.34962085618733,
+          "max_drawdown": -0.2690550168264635,
+          "n_trades": 486,
+          "transaction_costs": 448.34503986075725,
+          "final_value": 11816.965995283994,
+          "avg_exposure": 0.4863835894657757
+        },
+        {
+          "total_return": 0.8465179371691123,
+          "sharpe": 1.0481132036530618,
+          "max_drawdown": -0.18564398063734555,
+          "n_trades": 487,
+          "transaction_costs": 450.5315289470617,
+          "final_value": 18465.179371691123,
+          "avg_exposure": 0.5480673816909916
+        },
+        {
+          "total_return": 0.44035696568249794,
+          "sharpe": 0.6347252293797467,
+          "max_drawdown": -0.23755822683895256,
+          "n_trades": 477,
+          "transaction_costs": 439.6336923429344,
+          "final_value": 14403.569656824979,
+          "avg_exposure": 0.613139268232368
+        },
+        {
+          "total_return": 0.20947788543917167,
+          "sharpe": 0.459211072955528,
+          "max_drawdown": -0.25585094220596327,
+          "n_trades": 470,
+          "transaction_costs": 432.4605309551982,
+          "final_value": 12094.778854391716,
+          "avg_exposure": 0.4268809540008547
+        },
+        {
+          "total_return": 0.3385264820745211,
+          "sharpe": 0.5011612668573937,
+          "max_drawdown": -0.2821402350393757,
+          "n_trades": 465,
+          "transaction_costs": 424.414916149273,
+          "final_value": 13385.264820745211,
+          "avg_exposure": 0.7285024853940014
+        },
+        {
+          "total_return": 0.6353414491173961,
+          "sharpe": 0.7415006900363662,
+          "max_drawdown": -0.23980364274898314,
+          "n_trades": 468,
+          "transaction_costs": 434.46838408493886,
+          "final_value": 16353.41449117396,
+          "avg_exposure": 0.766811267640821
+        },
+        {
+          "total_return": 0.24288293979081876,
+          "sharpe": 0.7480401932169297,
+          "max_drawdown": -0.18201712948063575,
+          "n_trades": 463,
+          "transaction_costs": 426.1756951349276,
+          "final_value": 12428.829397908188,
+          "avg_exposure": 0.2891018102018141
+        },
+        {
+          "total_return": 0.28051152864187867,
+          "sharpe": 0.4357808485043169,
+          "max_drawdown": -0.255820576570685,
+          "n_trades": 491,
+          "transaction_costs": 452.8439264822782,
+          "final_value": 12805.115286418786,
+          "avg_exposure": 0.6743557501638024
+        },
+        {
+          "total_return": 0.2851043402688813,
+          "sharpe": 0.425236936885621,
+          "max_drawdown": -0.2671255281912741,
+          "n_trades": 471,
+          "transaction_costs": 430.92884673612406,
+          "final_value": 12851.043402688814,
+          "avg_exposure": 0.7519584990750366
+        },
+        {
+          "total_return": 0.30961990244497906,
+          "sharpe": 0.5696728461656511,
+          "max_drawdown": -0.23835235951126565,
+          "n_trades": 470,
+          "transaction_costs": 428.93803685931255,
+          "final_value": 13096.19902444979,
+          "avg_exposure": 0.5269134069882209
+        },
+        {
+          "total_return": 0.2160946730299793,
+          "sharpe": 0.45477382356062185,
+          "max_drawdown": -0.19822727604015766,
+          "n_trades": 491,
+          "transaction_costs": 454.3687372672625,
+          "final_value": 12160.946730299793,
+          "avg_exposure": 0.4854306853206566
+        },
+        {
+          "total_return": 0.08621739525361205,
+          "sharpe": 0.24357808676646275,
+          "max_drawdown": -0.22355528330869345,
+          "n_trades": 465,
+          "transaction_costs": 427.49818875454514,
+          "final_value": 10862.17395253612,
+          "avg_exposure": 0.45591814068925696
+        },
+        {
+          "total_return": 0.4412824044016497,
+          "sharpe": 0.7221260294227694,
+          "max_drawdown": -0.2620040795099392,
+          "n_trades": 482,
+          "transaction_costs": 448.2597763261611,
+          "final_value": 14412.824044016497,
+          "avg_exposure": 0.4996882666423509
+        },
+        {
+          "total_return": 0.6160201480200453,
+          "sharpe": 0.8390747927447376,
+          "max_drawdown": -0.2662973686572818,
+          "n_trades": 481,
+          "transaction_costs": 444.02845854673325,
+          "final_value": 16160.201480200452,
+          "avg_exposure": 0.5273169775882867
+        },
+        {
+          "total_return": 0.9882611815581199,
+          "sharpe": 1.1008565557020769,
+          "max_drawdown": -0.2253944373691219,
+          "n_trades": 499,
+          "transaction_costs": 459.46014455657667,
+          "final_value": 19882.6118155812,
+          "avg_exposure": 0.6905897617614304
+        },
+        {
+          "total_return": 0.34797677360427093,
+          "sharpe": 0.49516095795612114,
+          "max_drawdown": -0.2862493886054458,
+          "n_trades": 466,
+          "transaction_costs": 429.54820411497604,
+          "final_value": 13479.76773604271,
+          "avg_exposure": 0.6506871491286081
+        },
+        {
+          "total_return": 0.11653493651381464,
+          "sharpe": 0.2738959350571686,
+          "max_drawdown": -0.28444703387112813,
+          "n_trades": 473,
+          "transaction_costs": 436.0882215208582,
+          "final_value": 11165.349365138147,
+          "avg_exposure": 0.5119753303288935
+        },
+        {
+          "total_return": 0.3870252982888185,
+          "sharpe": 0.6732630226013693,
+          "max_drawdown": -0.19193320321461582,
+          "n_trades": 469,
+          "transaction_costs": 430.3747986561877,
+          "final_value": 13870.252982888185,
+          "avg_exposure": 0.5187977899623182
+        },
+        {
+          "total_return": 0.7431223571679961,
+          "sharpe": 0.908577489402127,
+          "max_drawdown": -0.22388927260304659,
+          "n_trades": 450,
+          "transaction_costs": 415.63174230699923,
+          "final_value": 17431.223571679962,
+          "avg_exposure": 0.6398367659652285
+        },
+        {
+          "total_return": 0.30412966112062967,
+          "sharpe": 0.49131363970219255,
+          "max_drawdown": -0.2619494457736409,
+          "n_trades": 516,
+          "transaction_costs": 475.2857757781711,
+          "final_value": 13041.296611206297,
+          "avg_exposure": 0.661654765462238
+        },
+        {
+          "total_return": -0.04512718316542619,
+          "sharpe": 0.03058069857367262,
+          "max_drawdown": -0.26745964531855393,
+          "n_trades": 478,
+          "transaction_costs": 439.2464452093178,
+          "final_value": 9548.728168345739,
+          "avg_exposure": 0.5188053991398432
+        },
+        {
+          "total_return": 0.29756511697368837,
+          "sharpe": 0.5507223385534809,
+          "max_drawdown": -0.23675779235558014,
+          "n_trades": 468,
+          "transaction_costs": 429.72675401439244,
+          "final_value": 12975.651169736884,
+          "avg_exposure": 0.5222980664420035
+        },
+        {
+          "total_return": 0.15165531664094867,
+          "sharpe": 0.3600484607633005,
+          "max_drawdown": -0.18005054490853878,
+          "n_trades": 465,
+          "transaction_costs": 431.1667303532376,
+          "final_value": 11516.553166409487,
+          "avg_exposure": 0.411255325896681
+        },
+        {
+          "total_return": 0.5779998636067039,
+          "sharpe": 0.9648734239882295,
+          "max_drawdown": -0.1556369404925817,
+          "n_trades": 520,
+          "transaction_costs": 485.51560237081446,
+          "final_value": 15779.99863606704,
+          "avg_exposure": 0.4382794100360263
+        },
+        {
+          "total_return": 0.6197179690960863,
+          "sharpe": 0.7626508435489602,
+          "max_drawdown": -0.2590972648547555,
+          "n_trades": 470,
+          "transaction_costs": 430.8541938015849,
+          "final_value": 16197.179690960864,
+          "avg_exposure": 0.7433417890331537
+        },
+        {
+          "total_return": 0.12256000881558582,
+          "sharpe": 0.29550165512021864,
+          "max_drawdown": -0.2603910804514943,
+          "n_trades": 477,
+          "transaction_costs": 438.0878868989897,
+          "final_value": 11225.600088155858,
+          "avg_exposure": 0.5209939958609822
+        },
+        {
+          "total_return": 0.13558411177743301,
+          "sharpe": 0.32918927299885625,
+          "max_drawdown": -0.22505514831129114,
+          "n_trades": 447,
+          "transaction_costs": 406.79472129417195,
+          "final_value": 11355.841117774331,
+          "avg_exposure": 0.4269211968195338
+        },
+        {
+          "total_return": 0.6039661596652597,
+          "sharpe": 0.8895102669289218,
+          "max_drawdown": -0.1895342003520296,
+          "n_trades": 460,
+          "transaction_costs": 423.885941857367,
+          "final_value": 16039.661596652597,
+          "avg_exposure": 0.5350165278137903
+        },
+        {
+          "total_return": 0.20614282487715863,
+          "sharpe": 0.36071606944064455,
+          "max_drawdown": -0.299073558606764,
+          "n_trades": 478,
+          "transaction_costs": 440.08354098750755,
+          "final_value": 12061.428248771586,
+          "avg_exposure": 0.7566593156321598
+        },
+        {
+          "total_return": 0.09010354765282846,
+          "sharpe": 0.25428161661624493,
+          "max_drawdown": -0.24971186952474977,
+          "n_trades": 486,
+          "transaction_costs": 446.747089275378,
+          "final_value": 10901.035476528285,
+          "avg_exposure": 0.363810617994384
+        },
+        {
+          "total_return": 0.21039390951035308,
+          "sharpe": 0.43329839711626983,
+          "max_drawdown": -0.15761142842724563,
+          "n_trades": 485,
+          "transaction_costs": 446.53857886146164,
+          "final_value": 12103.939095103531,
+          "avg_exposure": 0.4837430092177392
+        },
+        {
+          "total_return": 0.6435483805322351,
+          "sharpe": 1.2900226475923546,
+          "max_drawdown": -0.1086989577333699,
+          "n_trades": 457,
+          "transaction_costs": 420.3928948387288,
+          "final_value": 16435.48380532235,
+          "avg_exposure": 0.3206708182359189
+        },
+        {
+          "total_return": 0.22252198116229938,
+          "sharpe": 0.48340909160408035,
+          "max_drawdown": -0.24232275030587658,
+          "n_trades": 476,
+          "transaction_costs": 440.77696560436885,
+          "final_value": 12225.219811622994,
+          "avg_exposure": 0.3828957575214686
+        },
+        {
+          "total_return": 0.7386092058283369,
+          "sharpe": 1.3632888547330888,
+          "max_drawdown": -0.11507145973472765,
+          "n_trades": 465,
+          "transaction_costs": 429.43628489792616,
+          "final_value": 17386.092058283368,
+          "avg_exposure": 0.38495251057889934
+        },
+        {
+          "total_return": 0.06980899723240963,
+          "sharpe": 0.216163756332534,
+          "max_drawdown": -0.25741637693908526,
+          "n_trades": 469,
+          "transaction_costs": 432.76731954531095,
+          "final_value": 10698.089972324096,
+          "avg_exposure": 0.38490878964894754
+        },
+        {
+          "total_return": 0.39988470424828737,
+          "sharpe": 0.7609183370144275,
+          "max_drawdown": -0.19359232037102836,
+          "n_trades": 474,
+          "transaction_costs": 434.579067351777,
+          "final_value": 13998.847042482874,
+          "avg_exposure": 0.32202282540999844
+        },
+        {
+          "total_return": 0.22769494614142016,
+          "sharpe": 0.4868255976056029,
+          "max_drawdown": -0.20221738432450576,
+          "n_trades": 493,
+          "transaction_costs": 458.9260464828536,
+          "final_value": 12276.949461414202,
+          "avg_exposure": 0.3685152575396019
+        },
+        {
+          "total_return": -0.08033286606239531,
+          "sharpe": -0.0774185017307148,
+          "max_drawdown": -0.214570604113695,
+          "n_trades": 470,
+          "transaction_costs": 433.75963057772054,
+          "final_value": 9196.671339376047,
+          "avg_exposure": 0.3089080582991258
+        },
+        {
+          "total_return": 0.26502870298709946,
+          "sharpe": 0.6256566762914747,
+          "max_drawdown": -0.11579815024960505,
+          "n_trades": 462,
+          "transaction_costs": 424.48009564099226,
+          "final_value": 12650.287029870995,
+          "avg_exposure": 0.3691601238855714
+        },
+        {
+          "total_return": 0.0915895646196696,
+          "sharpe": 0.2796022647813026,
+          "max_drawdown": -0.17394049049279403,
+          "n_trades": 481,
+          "transaction_costs": 442.21921575059594,
+          "final_value": 10915.895646196695,
+          "avg_exposure": 0.32423205456238596
+        },
+        {
+          "total_return": 0.0971688387123879,
+          "sharpe": 0.25610974572181,
+          "max_drawdown": -0.2046509287011843,
+          "n_trades": 497,
+          "transaction_costs": 458.42806651314044,
+          "final_value": 10971.688387123879,
+          "avg_exposure": 0.4623820836281714
+        },
+        {
+          "total_return": 0.4619998157258116,
+          "sharpe": 0.7626167485767257,
+          "max_drawdown": -0.2587104724842497,
+          "n_trades": 492,
+          "transaction_costs": 457.23059207387314,
+          "final_value": 14619.998157258116,
+          "avg_exposure": 0.550958004048866
+        },
+        {
+          "total_return": 0.022191202916704844,
+          "sharpe": 0.12826320843194883,
+          "max_drawdown": -0.2379561856257445,
+          "n_trades": 482,
+          "transaction_costs": 440.05157942673037,
+          "final_value": 10221.912029167048,
+          "avg_exposure": 0.4101637060509967
+        },
+        {
+          "total_return": 0.32363432555086047,
+          "sharpe": 0.5256526068275776,
+          "max_drawdown": -0.25639087245274617,
+          "n_trades": 486,
+          "transaction_costs": 449.2931916836821,
+          "final_value": 13236.343255508606,
+          "avg_exposure": 0.4652274670982615
+        },
+        {
+          "total_return": 0.7548395559284593,
+          "sharpe": 0.9694177632324654,
+          "max_drawdown": -0.19853482499019648,
+          "n_trades": 501,
+          "transaction_costs": 463.63661852936735,
+          "final_value": 17548.395559284592,
+          "avg_exposure": 0.5476852388723318
+        }
+      ],
+      "All-cash": [
+        {
+          "total_return": 0.0,
+          "sharpe": 0.0,
+          "max_drawdown": 0.0,
+          "n_trades": 0,
+          "transaction_costs": 0.0,
+          "final_value": 10000.0,
+          "avg_exposure": 0.0
+        }
+      ]
+    },
+    "test": {
+      "Buy-and-hold": [
+        {
+          "total_return": 0.9906103601596854,
+          "sharpe": 1.7326890407281708,
+          "max_drawdown": -0.16588811575871287,
+          "n_trades": 1,
+          "transaction_costs": 9.973185907807839,
+          "final_value": 19906.103601596853,
+          "avg_exposure": 0.9988559642722605
+        }
+      ],
+      "Random (100 seeds)": [
+        {
+          "total_return": 0.10361085418993143,
+          "sharpe": 0.9344419224523953,
+          "max_drawdown": -0.08768927382858449,
+          "n_trades": 316,
+          "transaction_costs": 286.4943051359201,
+          "final_value": 11036.108541899315,
+          "avg_exposure": 0.19493507030022492
+        },
+        {
+          "total_return": 0.26977753665219395,
+          "sharpe": 1.180393486928933,
+          "max_drawdown": -0.08947492734102891,
+          "n_trades": 319,
+          "transaction_costs": 284.9588097235893,
+          "final_value": 12697.775366521939,
+          "avg_exposure": 0.4177880257064703
+        },
+        {
+          "total_return": 0.25845314209571923,
+          "sharpe": 1.0229755505423122,
+          "max_drawdown": -0.1172983309324458,
+          "n_trades": 303,
+          "transaction_costs": 270.9342345132547,
+          "final_value": 12584.531420957192,
+          "avg_exposure": 0.4708207496462889
+        },
+        {
+          "total_return": 0.28183830559291456,
+          "sharpe": 1.0705628817701063,
+          "max_drawdown": -0.11062505290636104,
+          "n_trades": 312,
+          "transaction_costs": 280.40600020168466,
+          "final_value": 12818.383055929145,
+          "avg_exposure": 0.5426087822964505
+        },
+        {
+          "total_return": 0.29952589507124694,
+          "sharpe": 1.300774845866657,
+          "max_drawdown": -0.11195419687552688,
+          "n_trades": 304,
+          "transaction_costs": 271.4687426823793,
+          "final_value": 12995.258950712469,
+          "avg_exposure": 0.43067886712434905
+        },
+        {
+          "total_return": 0.39186135611644923,
+          "sharpe": 1.326218571725857,
+          "max_drawdown": -0.11590750743211142,
+          "n_trades": 303,
+          "transaction_costs": 271.40975400193105,
+          "final_value": 13918.613561164493,
+          "avg_exposure": 0.5428509840884519
+        },
+        {
+          "total_return": 0.26206153961831413,
+          "sharpe": 1.6034020031345018,
+          "max_drawdown": -0.05293496838164313,
+          "n_trades": 312,
+          "transaction_costs": 280.5284514743277,
+          "final_value": 12620.61539618314,
+          "avg_exposure": 0.2977957499297054
+        },
+        {
+          "total_return": 0.2278506172938768,
+          "sharpe": 1.1100002501379065,
+          "max_drawdown": -0.13013743424321622,
+          "n_trades": 313,
+          "transaction_costs": 280.0986927737294,
+          "final_value": 12278.506172938769,
+          "avg_exposure": 0.4185315287272823
+        },
+        {
+          "total_return": 0.21000651456542285,
+          "sharpe": 0.9142132969270145,
+          "max_drawdown": -0.13714675860841685,
+          "n_trades": 310,
+          "transaction_costs": 277.9149413657614,
+          "final_value": 12100.06514565423,
+          "avg_exposure": 0.4487227166069288
+        },
+        {
+          "total_return": 0.17773499254468095,
+          "sharpe": 0.7555415449349496,
+          "max_drawdown": -0.1627633036200391,
+          "n_trades": 305,
+          "transaction_costs": 273.0779214215312,
+          "final_value": 11777.34992544681,
+          "avg_exposure": 0.42727219198817334
+        },
+        {
+          "total_return": 0.28870408497390354,
+          "sharpe": 1.1525116420730488,
+          "max_drawdown": -0.1198990344841393,
+          "n_trades": 303,
+          "transaction_costs": 271.7568417801184,
+          "final_value": 12887.040849739034,
+          "avg_exposure": 0.5082641935407357
+        },
+        {
+          "total_return": 0.2771729831642038,
+          "sharpe": 1.1205192995158022,
+          "max_drawdown": -0.10754969023543337,
+          "n_trades": 309,
+          "transaction_costs": 276.31239227297004,
+          "final_value": 12771.729831642038,
+          "avg_exposure": 0.3965611463272451
+        },
+        {
+          "total_return": 0.1746182464612578,
+          "sharpe": 1.0684558705083465,
+          "max_drawdown": -0.07647524926234128,
+          "n_trades": 278,
+          "transaction_costs": 249.55761060632517,
+          "final_value": 11746.182464612579,
+          "avg_exposure": 0.22933215653708539
+        },
+        {
+          "total_return": 0.4127652520123588,
+          "sharpe": 1.3247881845192702,
+          "max_drawdown": -0.13173331680226152,
+          "n_trades": 310,
+          "transaction_costs": 277.3325298801073,
+          "final_value": 14127.652520123589,
+          "avg_exposure": 0.526246433506952
+        },
+        {
+          "total_return": 0.12894626978543777,
+          "sharpe": 0.6051653448754983,
+          "max_drawdown": -0.16946122186099777,
+          "n_trades": 276,
+          "transaction_costs": 247.7354300503849,
+          "final_value": 11289.462697854378,
+          "avg_exposure": 0.41922819313284226
+        },
+        {
+          "total_return": 0.3625369412823827,
+          "sharpe": 1.2133116364891188,
+          "max_drawdown": -0.12601823664350775,
+          "n_trades": 336,
+          "transaction_costs": 300.81026128290495,
+          "final_value": 13625.369412823828,
+          "avg_exposure": 0.524241299246615
+        },
+        {
+          "total_return": 0.2705855197957161,
+          "sharpe": 0.9501955375268629,
+          "max_drawdown": -0.15654830342330028,
+          "n_trades": 281,
+          "transaction_costs": 252.0990488394565,
+          "final_value": 12705.85519795716,
+          "avg_exposure": 0.5247609764482412
+        },
+        {
+          "total_return": 0.6204639829644756,
+          "sharpe": 1.4445943255634444,
+          "max_drawdown": -0.16159741800797178,
+          "n_trades": 286,
+          "transaction_costs": 253.55719780751485,
+          "final_value": 16204.639829644755,
+          "avg_exposure": 0.8464202219021799
+        },
+        {
+          "total_return": 0.21432843075805175,
+          "sharpe": 1.3624222150203036,
+          "max_drawdown": -0.06131874787826752,
+          "n_trades": 320,
+          "transaction_costs": 285.9672161760786,
+          "final_value": 12143.284307580518,
+          "avg_exposure": 0.22243643098493757
+        },
+        {
+          "total_return": 0.3668219069939562,
+          "sharpe": 1.2577656912627293,
+          "max_drawdown": -0.15137415135668641,
+          "n_trades": 315,
+          "transaction_costs": 282.74110870817105,
+          "final_value": 13668.219069939563,
+          "avg_exposure": 0.4942372127762403
+        },
+        {
+          "total_return": 0.20077956328844015,
+          "sharpe": 0.7004024341377786,
+          "max_drawdown": -0.15303523879653813,
+          "n_trades": 307,
+          "transaction_costs": 276.4213945969618,
+          "final_value": 12007.795632884401,
+          "avg_exposure": 0.6665024835315062
+        },
+        {
+          "total_return": 0.3809262588632627,
+          "sharpe": 1.3241430957099758,
+          "max_drawdown": -0.1312456829126213,
+          "n_trades": 309,
+          "transaction_costs": 277.8049283890585,
+          "final_value": 13809.262588632628,
+          "avg_exposure": 0.5202046376942131
+        },
+        {
+          "total_return": 0.32333924532760383,
+          "sharpe": 1.527668375072237,
+          "max_drawdown": -0.08513807606440504,
+          "n_trades": 317,
+          "transaction_costs": 284.3328580643223,
+          "final_value": 13233.39245327604,
+          "avg_exposure": 0.38518816454573385
+        },
+        {
+          "total_return": 0.2658697582276286,
+          "sharpe": 1.4020964661480486,
+          "max_drawdown": -0.09770322800623599,
+          "n_trades": 302,
+          "transaction_costs": 271.98540203300223,
+          "final_value": 12658.697582276285,
+          "avg_exposure": 0.3465460445435315
+        },
+        {
+          "total_return": 0.3809683030876867,
+          "sharpe": 1.344410584846064,
+          "max_drawdown": -0.12224897907986276,
+          "n_trades": 323,
+          "transaction_costs": 289.10627322054006,
+          "final_value": 13809.683030876868,
+          "avg_exposure": 0.4830248914371422
+        },
+        {
+          "total_return": 0.5144618700325989,
+          "sharpe": 1.7527322806972587,
+          "max_drawdown": -0.08710601929451289,
+          "n_trades": 322,
+          "transaction_costs": 290.28425133550115,
+          "final_value": 15144.61870032599,
+          "avg_exposure": 0.5015161008683958
+        },
+        {
+          "total_return": 0.06545462347958564,
+          "sharpe": 0.3977974119055398,
+          "max_drawdown": -0.10837554459635779,
+          "n_trades": 318,
+          "transaction_costs": 284.03109999624036,
+          "final_value": 10654.546234795856,
+          "avg_exposure": 0.3661845346009055
+        },
+        {
+          "total_return": -0.027135990002166044,
+          "sharpe": -0.1350491595768744,
+          "max_drawdown": -0.12087556607101757,
+          "n_trades": 308,
+          "transaction_costs": 274.89142888864814,
+          "final_value": 9728.64009997834,
+          "avg_exposure": 0.28086621164944015
+        },
+        {
+          "total_return": 0.18378058004488373,
+          "sharpe": 0.9233391235361093,
+          "max_drawdown": -0.07266637150679522,
+          "n_trades": 323,
+          "transaction_costs": 289.83660368185207,
+          "final_value": 11837.805800448838,
+          "avg_exposure": 0.3757220689950196
+        },
+        {
+          "total_return": 0.6581040331741166,
+          "sharpe": 1.7539198949956627,
+          "max_drawdown": -0.1131157821637625,
+          "n_trades": 322,
+          "transaction_costs": 288.8265513905935,
+          "final_value": 16581.040331741166,
+          "avg_exposure": 0.6877649754014096
+        },
+        {
+          "total_return": 0.05184846718491154,
+          "sharpe": 0.27036449837784915,
+          "max_drawdown": -0.17074107573526465,
+          "n_trades": 290,
+          "transaction_costs": 258.650205030958,
+          "final_value": 10518.484671849115,
+          "avg_exposure": 0.5328065005256225
+        },
+        {
+          "total_return": 0.22364504857121803,
+          "sharpe": 0.8446072495903205,
+          "max_drawdown": -0.1547468375886697,
+          "n_trades": 322,
+          "transaction_costs": 287.91635035749664,
+          "final_value": 12236.45048571218,
+          "avg_exposure": 0.545989973605655
+        },
+        {
+          "total_return": 0.4207216595144656,
+          "sharpe": 1.2149837153040144,
+          "max_drawdown": -0.16577601444231227,
+          "n_trades": 302,
+          "transaction_costs": 270.15520878711897,
+          "final_value": 14207.216595144655,
+          "avg_exposure": 0.6712610855166421
+        },
+        {
+          "total_return": 0.25409879924222833,
+          "sharpe": 0.9689820347384316,
+          "max_drawdown": -0.12312699245678538,
+          "n_trades": 314,
+          "transaction_costs": 283.2773861407959,
+          "final_value": 12540.987992422282,
+          "avg_exposure": 0.5633983747338183
+        },
+        {
+          "total_return": 0.4482118614307571,
+          "sharpe": 1.5331813716912337,
+          "max_drawdown": -0.13708695206786758,
+          "n_trades": 301,
+          "transaction_costs": 270.17031195294993,
+          "final_value": 14482.11861430757,
+          "avg_exposure": 0.5265423883799151
+        },
+        {
+          "total_return": 0.33363388023343266,
+          "sharpe": 1.321704855982169,
+          "max_drawdown": -0.11970338531132674,
+          "n_trades": 287,
+          "transaction_costs": 257.84972267036505,
+          "final_value": 13336.338802334327,
+          "avg_exposure": 0.3771285364264963
+        },
+        {
+          "total_return": 0.6868005988698038,
+          "sharpe": 1.690008665128747,
+          "max_drawdown": -0.12339113543941649,
+          "n_trades": 303,
+          "transaction_costs": 272.2649741067042,
+          "final_value": 16868.005988698038,
+          "avg_exposure": 0.7472882885571447
+        },
+        {
+          "total_return": 0.29544873808885397,
+          "sharpe": 0.9295272230229842,
+          "max_drawdown": -0.1484270298065008,
+          "n_trades": 294,
+          "transaction_costs": 262.5080662369729,
+          "final_value": 12954.487380888539,
+          "avg_exposure": 0.5858680778207249
+        },
+        {
+          "total_return": 0.3053901138329915,
+          "sharpe": 1.2939472521039803,
+          "max_drawdown": -0.11358184061666754,
+          "n_trades": 298,
+          "transaction_costs": 266.8229150021023,
+          "final_value": 13053.901138329915,
+          "avg_exposure": 0.44463938445286993
+        },
+        {
+          "total_return": 0.36303832900069066,
+          "sharpe": 1.0714067276169736,
+          "max_drawdown": -0.15906612172064238,
+          "n_trades": 306,
+          "transaction_costs": 272.75969419642945,
+          "final_value": 13630.383290006906,
+          "avg_exposure": 0.6723845294103079
+        },
+        {
+          "total_return": 0.268760978197883,
+          "sharpe": 1.4865562322685986,
+          "max_drawdown": -0.08884442073344301,
+          "n_trades": 298,
+          "transaction_costs": 268.5838095805017,
+          "final_value": 12687.60978197883,
+          "avg_exposure": 0.3443217806859288
+        },
+        {
+          "total_return": 0.13490826403474498,
+          "sharpe": 0.6451296509983134,
+          "max_drawdown": -0.09131551788976466,
+          "n_trades": 297,
+          "transaction_costs": 266.9049055892535,
+          "final_value": 11349.08264034745,
+          "avg_exposure": 0.4378788194207271
+        },
+        {
+          "total_return": 0.06150975653377988,
+          "sharpe": 0.3137383891832529,
+          "max_drawdown": -0.1599064181125649,
+          "n_trades": 300,
+          "transaction_costs": 268.32297939009226,
+          "final_value": 10615.0975653378,
+          "avg_exposure": 0.4625831612272572
+        },
+        {
+          "total_return": 0.23674283506906102,
+          "sharpe": 1.2457556730912407,
+          "max_drawdown": -0.09501253563574386,
+          "n_trades": 313,
+          "transaction_costs": 281.49420826310694,
+          "final_value": 12367.42835069061,
+          "avg_exposure": 0.35972563887296344
+        },
+        {
+          "total_return": 0.07339408534618097,
+          "sharpe": 0.47806637945012176,
+          "max_drawdown": -0.13783331948841948,
+          "n_trades": 312,
+          "transaction_costs": 280.1094885380775,
+          "final_value": 10733.94085346181,
+          "avg_exposure": 0.2757746623296333
+        },
+        {
+          "total_return": 0.1465540828803733,
+          "sharpe": 0.9201142569631585,
+          "max_drawdown": -0.10556264907729762,
+          "n_trades": 325,
+          "transaction_costs": 291.43307973837244,
+          "final_value": 11465.540828803732,
+          "avg_exposure": 0.31815963108482026
+        },
+        {
+          "total_return": 0.3389297709008896,
+          "sharpe": 1.0220189581437198,
+          "max_drawdown": -0.13847987268733086,
+          "n_trades": 290,
+          "transaction_costs": 260.51202437195985,
+          "final_value": 13389.297709008897,
+          "avg_exposure": 0.6496450981024713
+        },
+        {
+          "total_return": 0.18358409748848747,
+          "sharpe": 0.7134405222961645,
+          "max_drawdown": -0.14954465912204384,
+          "n_trades": 302,
+          "transaction_costs": 269.81878556909277,
+          "final_value": 11835.840974884875,
+          "avg_exposure": 0.4664370339307142
+        },
+        {
+          "total_return": 0.12514395820393398,
+          "sharpe": 0.5512489300688368,
+          "max_drawdown": -0.16193922568072083,
+          "n_trades": 316,
+          "transaction_costs": 283.2201025815871,
+          "final_value": 11251.43958203934,
+          "avg_exposure": 0.5404429395377766
+        },
+        {
+          "total_return": 0.27068924461200994,
+          "sharpe": 1.048683499569383,
+          "max_drawdown": -0.12881291721971877,
+          "n_trades": 322,
+          "transaction_costs": 289.2061431785934,
+          "final_value": 12706.892446120099,
+          "avg_exposure": 0.581232756132262
+        },
+        {
+          "total_return": 0.09274609110693666,
+          "sharpe": 0.473417588992797,
+          "max_drawdown": -0.139666645860704,
+          "n_trades": 293,
+          "transaction_costs": 262.84458930585515,
+          "final_value": 10927.460911069367,
+          "avg_exposure": 0.44078276967419455
+        },
+        {
+          "total_return": 0.22631769153154102,
+          "sharpe": 0.7625761687485186,
+          "max_drawdown": -0.1579264431400108,
+          "n_trades": 306,
+          "transaction_costs": 275.6995615526762,
+          "final_value": 12263.176915315411,
+          "avg_exposure": 0.6796569025138774
+        },
+        {
+          "total_return": 0.3289096369997293,
+          "sharpe": 1.1224507014307248,
+          "max_drawdown": -0.14714445016949707,
+          "n_trades": 288,
+          "transaction_costs": 257.0775702065354,
+          "final_value": 13289.096369997293,
+          "avg_exposure": 0.6052920154724729
+        },
+        {
+          "total_return": 0.31192333464040134,
+          "sharpe": 0.9469964949698519,
+          "max_drawdown": -0.1580483857584951,
+          "n_trades": 287,
+          "transaction_costs": 256.8261784898516,
+          "final_value": 13119.233346404013,
+          "avg_exposure": 0.6654666707647704
+        },
+        {
+          "total_return": 0.3580346320261232,
+          "sharpe": 1.1393899829529839,
+          "max_drawdown": -0.14722432347988867,
+          "n_trades": 285,
+          "transaction_costs": 253.87698196257776,
+          "final_value": 13580.346320261231,
+          "avg_exposure": 0.6090621541811176
+        },
+        {
+          "total_return": 0.4055851157750312,
+          "sharpe": 1.2325571368416308,
+          "max_drawdown": -0.14022556044702372,
+          "n_trades": 321,
+          "transaction_costs": 289.4574115911222,
+          "final_value": 14055.851157750312,
+          "avg_exposure": 0.6031739155260779
+        },
+        {
+          "total_return": 0.33351274155545374,
+          "sharpe": 1.2105646123717408,
+          "max_drawdown": -0.1275463778767011,
+          "n_trades": 337,
+          "transaction_costs": 303.4270183220915,
+          "final_value": 13335.127415554538,
+          "avg_exposure": 0.5931145785996775
+        },
+        {
+          "total_return": 0.4841849357330441,
+          "sharpe": 1.5049428974382413,
+          "max_drawdown": -0.121349221363937,
+          "n_trades": 321,
+          "transaction_costs": 289.29582997714925,
+          "final_value": 14841.84935733044,
+          "avg_exposure": 0.5986699530285727
+        },
+        {
+          "total_return": 0.0741733785603007,
+          "sharpe": 0.41593155491188216,
+          "max_drawdown": -0.11809366042937175,
+          "n_trades": 301,
+          "transaction_costs": 269.2071834643423,
+          "final_value": 10741.733785603008,
+          "avg_exposure": 0.3270573461529399
+        },
+        {
+          "total_return": 0.36549938783006075,
+          "sharpe": 1.1525908348914957,
+          "max_drawdown": -0.13312901246843567,
+          "n_trades": 297,
+          "transaction_costs": 266.0174190064338,
+          "final_value": 13654.993878300607,
+          "avg_exposure": 0.6169145772327627
+        },
+        {
+          "total_return": 0.5085296173865779,
+          "sharpe": 1.368048956069355,
+          "max_drawdown": -0.13274759544260084,
+          "n_trades": 316,
+          "transaction_costs": 283.4188452505081,
+          "final_value": 15085.29617386578,
+          "avg_exposure": 0.7456768020126365
+        },
+        {
+          "total_return": 0.15732481219924233,
+          "sharpe": 0.8892528676023382,
+          "max_drawdown": -0.07990874707158546,
+          "n_trades": 287,
+          "transaction_costs": 257.21263548942426,
+          "final_value": 11573.248121992423,
+          "avg_exposure": 0.2799607771806831
+        },
+        {
+          "total_return": 0.32397505452537545,
+          "sharpe": 1.1533473385290394,
+          "max_drawdown": -0.12491311842929242,
+          "n_trades": 333,
+          "transaction_costs": 299.99425468851314,
+          "final_value": 13239.750545253755,
+          "avg_exposure": 0.5699516767081733
+        },
+        {
+          "total_return": 0.47461415591467926,
+          "sharpe": 1.3620302138541576,
+          "max_drawdown": -0.1294464967121789,
+          "n_trades": 310,
+          "transaction_costs": 276.7549004388975,
+          "final_value": 14746.141559146792,
+          "avg_exposure": 0.7096812703757526
+        },
+        {
+          "total_return": 0.2293840740903086,
+          "sharpe": 0.9241795554480157,
+          "max_drawdown": -0.10266774520115529,
+          "n_trades": 307,
+          "transaction_costs": 274.0156801138564,
+          "final_value": 12293.840740903086,
+          "avg_exposure": 0.4140892647163191
+        },
+        {
+          "total_return": 0.46748122734142594,
+          "sharpe": 1.8491797949942503,
+          "max_drawdown": -0.07778914398626724,
+          "n_trades": 309,
+          "transaction_costs": 276.9454625672109,
+          "final_value": 14674.81227341426,
+          "avg_exposure": 0.45773672894656753
+        },
+        {
+          "total_return": 0.144014725792722,
+          "sharpe": 0.7434411868331492,
+          "max_drawdown": -0.10266073833209544,
+          "n_trades": 298,
+          "transaction_costs": 268.81981394969273,
+          "final_value": 11440.14725792722,
+          "avg_exposure": 0.3642998994926884
+        },
+        {
+          "total_return": 0.27584129805620283,
+          "sharpe": 1.4058777343830173,
+          "max_drawdown": -0.08180791843367285,
+          "n_trades": 311,
+          "transaction_costs": 277.78589573692176,
+          "final_value": 12758.412980562029,
+          "avg_exposure": 0.38768326905886885
+        },
+        {
+          "total_return": 0.2103868145060046,
+          "sharpe": 0.9402700012476642,
+          "max_drawdown": -0.11138971179323676,
+          "n_trades": 316,
+          "transaction_costs": 283.9307247893035,
+          "final_value": 12103.868145060045,
+          "avg_exposure": 0.490883290262733
+        },
+        {
+          "total_return": 0.31092937411184796,
+          "sharpe": 0.9781953880244169,
+          "max_drawdown": -0.16242282232788874,
+          "n_trades": 323,
+          "transaction_costs": 290.12226750446627,
+          "final_value": 13109.29374111848,
+          "avg_exposure": 0.6647555219116937
+        },
+        {
+          "total_return": 0.4774346910896248,
+          "sharpe": 1.3323757806511274,
+          "max_drawdown": -0.17544094226383566,
+          "n_trades": 304,
+          "transaction_costs": 271.7725398494414,
+          "final_value": 14774.346910896247,
+          "avg_exposure": 0.6874365358779102
+        },
+        {
+          "total_return": 0.4107645115754608,
+          "sharpe": 1.2130440915160428,
+          "max_drawdown": -0.13893517384458898,
+          "n_trades": 315,
+          "transaction_costs": 281.824912238721,
+          "final_value": 14107.645115754609,
+          "avg_exposure": 0.6009768163870136
+        },
+        {
+          "total_return": 0.5029522638903847,
+          "sharpe": 1.753691104531862,
+          "max_drawdown": -0.12014158924291962,
+          "n_trades": 308,
+          "transaction_costs": 276.06885944792316,
+          "final_value": 15029.522638903847,
+          "avg_exposure": 0.5188405447906609
+        },
+        {
+          "total_return": 0.27652336712336356,
+          "sharpe": 1.0636047410086136,
+          "max_drawdown": -0.10934459110683492,
+          "n_trades": 302,
+          "transaction_costs": 269.8832382637111,
+          "final_value": 12765.233671233635,
+          "avg_exposure": 0.5044745730473635
+        },
+        {
+          "total_return": 0.4673571248931625,
+          "sharpe": 1.3510647694268973,
+          "max_drawdown": -0.13272995349806527,
+          "n_trades": 335,
+          "transaction_costs": 299.9422207516205,
+          "final_value": 14673.571248931625,
+          "avg_exposure": 0.629540394716137
+        },
+        {
+          "total_return": 0.15863021600342564,
+          "sharpe": 0.9621271888944656,
+          "max_drawdown": -0.06968136134733827,
+          "n_trades": 306,
+          "transaction_costs": 272.8317616018923,
+          "final_value": 11586.302160034256,
+          "avg_exposure": 0.318608916607533
+        },
+        {
+          "total_return": 0.2224264559197937,
+          "sharpe": 1.1544151409443482,
+          "max_drawdown": -0.08435113962981955,
+          "n_trades": 308,
+          "transaction_costs": 275.134692973386,
+          "final_value": 12224.264559197938,
+          "avg_exposure": 0.38063994128073825
+        },
+        {
+          "total_return": 0.36882713921297694,
+          "sharpe": 1.6145288554271116,
+          "max_drawdown": -0.06817602961120073,
+          "n_trades": 310,
+          "transaction_costs": 278.72284918925124,
+          "final_value": 13688.271392129769,
+          "avg_exposure": 0.38914563104888694
+        },
+        {
+          "total_return": 0.3304583616083434,
+          "sharpe": 1.3331096323762792,
+          "max_drawdown": -0.10293527302429284,
+          "n_trades": 350,
+          "transaction_costs": 315.1728871543606,
+          "final_value": 13304.583616083433,
+          "avg_exposure": 0.4609393550508928
+        },
+        {
+          "total_return": 0.38232989773131143,
+          "sharpe": 1.1696602111756353,
+          "max_drawdown": -0.13993036313625806,
+          "n_trades": 307,
+          "transaction_costs": 274.1933095116432,
+          "final_value": 13823.298977313114,
+          "avg_exposure": 0.6410540201615157
+        },
+        {
+          "total_return": 0.522705684204732,
+          "sharpe": 1.7828917508283588,
+          "max_drawdown": -0.10727006944155404,
+          "n_trades": 315,
+          "transaction_costs": 282.22881513943344,
+          "final_value": 15227.05684204732,
+          "avg_exposure": 0.4340105450613634
+        },
+        {
+          "total_return": 0.05415037703015968,
+          "sharpe": 0.3443883426521572,
+          "max_drawdown": -0.10979173761464778,
+          "n_trades": 284,
+          "transaction_costs": 253.5346586350876,
+          "final_value": 10541.503770301597,
+          "avg_exposure": 0.33714844386860193
+        },
+        {
+          "total_return": 0.17301827912824552,
+          "sharpe": 0.6305555597878665,
+          "max_drawdown": -0.16752070143313558,
+          "n_trades": 296,
+          "transaction_costs": 263.8584380028316,
+          "final_value": 11730.182791282456,
+          "avg_exposure": 0.5368305187308159
+        },
+        {
+          "total_return": 0.4983760918636888,
+          "sharpe": 1.246332181463735,
+          "max_drawdown": -0.195047135450509,
+          "n_trades": 323,
+          "transaction_costs": 288.3747172508402,
+          "final_value": 14983.760918636888,
+          "avg_exposure": 0.7676996061887551
+        },
+        {
+          "total_return": 0.2688192516403072,
+          "sharpe": 1.9245402280115864,
+          "max_drawdown": -0.05805315067470085,
+          "n_trades": 331,
+          "transaction_costs": 297.75669875469816,
+          "final_value": 12688.19251640307,
+          "avg_exposure": 0.22569987015839568
+        },
+        {
+          "total_return": 0.2930103707908034,
+          "sharpe": 1.1316111215248759,
+          "max_drawdown": -0.14026861060741647,
+          "n_trades": 329,
+          "transaction_costs": 295.9908568914739,
+          "final_value": 12930.103707908034,
+          "avg_exposure": 0.512455257298588
+        },
+        {
+          "total_return": 0.10332803865666218,
+          "sharpe": 0.7431336148799582,
+          "max_drawdown": -0.11360802016798355,
+          "n_trades": 306,
+          "transaction_costs": 275.4564402727176,
+          "final_value": 11033.280386566621,
+          "avg_exposure": 0.2944796816848436
+        },
+        {
+          "total_return": 0.2500794178640393,
+          "sharpe": 0.9906639492449092,
+          "max_drawdown": -0.11244613145554139,
+          "n_trades": 311,
+          "transaction_costs": 279.2675215739529,
+          "final_value": 12500.794178640394,
+          "avg_exposure": 0.44244132018873233
+        },
+        {
+          "total_return": 0.26656802334409635,
+          "sharpe": 0.9618196473611746,
+          "max_drawdown": -0.1729851939599174,
+          "n_trades": 294,
+          "transaction_costs": 262.088193139621,
+          "final_value": 12665.680233440964,
+          "avg_exposure": 0.46562204205049124
+        },
+        {
+          "total_return": 0.22757849579592926,
+          "sharpe": 1.4605248379184859,
+          "max_drawdown": -0.04626025485941765,
+          "n_trades": 300,
+          "transaction_costs": 269.6825219129458,
+          "final_value": 12275.784957959293,
+          "avg_exposure": 0.2906967265097487
+        },
+        {
+          "total_return": 0.06644165862238838,
+          "sharpe": 0.38900161615369394,
+          "max_drawdown": -0.17207014974918733,
+          "n_trades": 313,
+          "transaction_costs": 280.71220354136733,
+          "final_value": 10664.416586223884,
+          "avg_exposure": 0.3538538795409291
+        },
+        {
+          "total_return": 0.2528684946530777,
+          "sharpe": 1.3178339540688184,
+          "max_drawdown": -0.08413010400399135,
+          "n_trades": 334,
+          "transaction_costs": 298.2582908215136,
+          "final_value": 12528.684946530777,
+          "avg_exposure": 0.360410002309061
+        },
+        {
+          "total_return": 0.281453442367253,
+          "sharpe": 1.699976627300583,
+          "max_drawdown": -0.05526966361027974,
+          "n_trades": 316,
+          "transaction_costs": 285.33392563928453,
+          "final_value": 12814.53442367253,
+          "avg_exposure": 0.23596612911184509
+        },
+        {
+          "total_return": 0.30323407520993206,
+          "sharpe": 1.2312103278499076,
+          "max_drawdown": -0.08217466594359601,
+          "n_trades": 303,
+          "transaction_costs": 272.7697114972637,
+          "final_value": 13032.34075209932,
+          "avg_exposure": 0.42187673680244797
+        },
+        {
+          "total_return": 0.15147197224206366,
+          "sharpe": 0.9893509559702478,
+          "max_drawdown": -0.09271071165532963,
+          "n_trades": 316,
+          "transaction_costs": 283.65354928445026,
+          "final_value": 11514.719722420637,
+          "avg_exposure": 0.3138889991086939
+        },
+        {
+          "total_return": 0.5045766774360261,
+          "sharpe": 1.5503891563078047,
+          "max_drawdown": -0.11703655489189468,
+          "n_trades": 324,
+          "transaction_costs": 290.9006257472212,
+          "final_value": 15045.766774360261,
+          "avg_exposure": 0.4738713545564768
+        },
+        {
+          "total_return": 0.5028893692807537,
+          "sharpe": 1.7941146463355824,
+          "max_drawdown": -0.09494156119178032,
+          "n_trades": 328,
+          "transaction_costs": 294.98760062832775,
+          "final_value": 15028.893692807536,
+          "avg_exposure": 0.49102842115514134
+        },
+        {
+          "total_return": 0.21188706071456953,
+          "sharpe": 1.4977485724279165,
+          "max_drawdown": -0.06927198266817314,
+          "n_trades": 313,
+          "transaction_costs": 281.7056639509734,
+          "final_value": 12118.870607145695,
+          "avg_exposure": 0.25461366036983973
+        },
+        {
+          "total_return": 0.3353552181324555,
+          "sharpe": 1.1193445180068675,
+          "max_drawdown": -0.1665404710347339,
+          "n_trades": 314,
+          "transaction_costs": 282.7303315621537,
+          "final_value": 13353.552181324554,
+          "avg_exposure": 0.5614659000917491
+        },
+        {
+          "total_return": 0.3223887686163107,
+          "sharpe": 1.0769533780311464,
+          "max_drawdown": -0.1324530345895515,
+          "n_trades": 321,
+          "transaction_costs": 287.27081489856397,
+          "final_value": 13223.887686163107,
+          "avg_exposure": 0.6392926091603787
+        }
+      ],
+      "All-cash": [
+        {
+          "total_return": 0.0,
+          "sharpe": 0.0,
+          "max_drawdown": 0.0,
+          "n_trades": 0,
+          "transaction_costs": 0.0,
+          "final_value": 10000.0,
+          "avg_exposure": 0.0
+        }
+      ]
+    }
+  }
+}
