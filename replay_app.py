@@ -15,7 +15,6 @@ from results_loader import (
     METRIC_KEYS,
     artifact_root,
     baseline_rows,
-    figures,
     find_run,
     format_metric,
     load_results,
@@ -125,27 +124,6 @@ weights = right.selectbox(
     format_func=lambda name: "Selected checkpoint" if name == "selected" else "Final weights",
 )
 
-per_run = per_run_rows(results, split, weights)
-st.subheader(f"{split} · {weights} weights")
-st.dataframe(_frame(per_run, formatted=True), width="stretch", hide_index=True)
-st.caption(
-    "Each row is one saved run. Total return, drawdown and average invested are fractions in the file "
-    "and shown here as percents. Selection score is the validation Sharpe used to keep the checkpoint."
-)
-
-st.subheader("Mean ± sample std across the stored seeds")
-st.dataframe(_frame(summary_rows(results, split, weights)), width="stretch", hide_index=True)
-
-baselines = baseline_rows(results, split)
-if baselines:
-    st.subheader("Baselines from the same file")
-    st.dataframe(_frame(baselines), width="stretch", hide_index=True)
-    st.caption(
-        "Buy-and-hold on the training split is one stored dict. "
-        "Validation and test baselines are stored as lists; a list of one is shown as that row, "
-        "and Random is the mean ± sample std of the 100 stored seeds."
-    )
-
 st.subheader("Trade view")
 st.caption(
     "The chart replays the same split and the same weights as the table. "
@@ -228,12 +206,23 @@ with chart_col:
     else:
         st.info(f"Add {ckpt.name} under runs/ to draw the trade chart.")
 
-saved_figs = figures(root)
-if saved_figs:
-    st.subheader("Figures saved with the runs")
+per_run = per_run_rows(results, split, weights)
+st.subheader(f"{split} · {weights} weights")
+st.dataframe(_frame(per_run, formatted=True), width="stretch", hide_index=True)
+st.caption(
+    "Each row is one saved run. Total return, drawdown and average invested are fractions in the file "
+    "and shown here as percents. Selection score is the validation Sharpe used to keep the checkpoint."
+)
+
+st.subheader("Mean ± sample std")
+st.dataframe(_frame(summary_rows(results, split, weights)), width="stretch", hide_index=True)
+
+baselines = baseline_rows(results, split)
+if baselines:
+    st.subheader("Baselines")
+    st.dataframe(_frame(baselines), width="stretch", hide_index=True)
     st.caption(
-        "These are the PNG files written with the notebook. "
-        "They do not follow the split and weights controls."
+        "Buy-and-hold on the training split is one stored dict. "
+        "Validation and test baselines are stored as lists; a list of one is shown as that row, "
+        "and Random is the mean ± sample std of the 100 stored seeds."
     )
-    for path in saved_figs:
-        st.image(str(path), caption=path.name, width="stretch")
