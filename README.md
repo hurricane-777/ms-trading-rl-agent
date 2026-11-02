@@ -11,6 +11,8 @@ streamlit run replay_app.py
 
 Then open http://localhost:8501
 
+The sidebar has two pages. **Replay app** is the trade chart and the stored tables. **Latest bar** runs one saved checkpoint on the last row of `aapl_ohlcv.csv` (there is no live feed; the date on that row is shown on the page). Pick a model, seed 0, 1 or 2, and selected or final weights, enter cash and Apple shares, then press **Run saved network**. The page shows Hold, Buy one lot, or Sell one lot, and whether that lot would be unfilled under the same cash and share rules as the training env. Under the action it shows that run's stored 2023–2024 test result from `final_results.json` next to buy-and-hold. The action is the saved model's output, not an order and not advice.
+
 `final_results.json`, `aapl_ohlcv.csv`, `figures/`, `runs/*_selected.pt`, and `runs/*_final.pt` sit next to `replay_app.py`. To point at another copy of that folder, set `TRADING_AGENT_ROOT`.
 
 `DQN.pt` and `Double_Dueling_DQN.pt` are the earlier Part C trial. The dashboard does not load them.
